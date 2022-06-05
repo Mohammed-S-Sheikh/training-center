@@ -14,7 +14,7 @@
         <!-- Styles -->
         @include('partials.styles')
     </head>
-    <body>
+    <body dir="rtl">
         <!-- Page Container -->
         <div class="page-container">
             {{-- @if(Auth::check()) --}}

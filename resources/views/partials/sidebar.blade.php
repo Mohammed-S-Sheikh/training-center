@@ -10,17 +10,17 @@
             <ul class="accordion-menu">
                 <li class="active-page">
                     <a href="{{ route('dashboard') }}">
-                        <i class="menu-icon icon-home4"></i><span>Dashboard</span>
+                        <i class="menu-icon icon-home4"></i><span>الرئيسية</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('delegates.index') }}">
-                        <i class="menu-icon icon-inbox"></i><span>Delegate</span>
+                        <i class="menu-icon icon-inbox"></i><span>المندوبين</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('trainees.index') }}">
-                        <i class="menu-icon icon-inbox"></i><span>Trainee</span>
+                        <i class="menu-icon icon-inbox"></i><span>المتدربين</span>
                     </a>
                 </li>
                 <li class="menu-divider"></li>
