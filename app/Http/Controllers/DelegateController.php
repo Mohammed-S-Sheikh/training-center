@@ -17,7 +17,7 @@ class DelegateController extends Controller
     {
         $delegates = User::all();
 
-        return view('delegates.index', compact('delegates'));
+        return view('pages.delegate.index', compact('delegates'));
     }
 
     /**
@@ -27,7 +27,7 @@ class DelegateController extends Controller
      */
     public function create()
     {
-        return view('delegates.create');
+        return view('pages.delegate.create');
     }
 
     /**
@@ -51,7 +51,7 @@ class DelegateController extends Controller
      */
     public function show(User $user)
     {
-        return view('delegates.show', compact('user'));
+        return view('pages.delegate.show', compact('user'));
     }
 
     /**
@@ -62,7 +62,7 @@ class DelegateController extends Controller
      */
     public function edit(User $user)
     {
-        return view('delegates.edit', compact('user'));
+        return view('pages.delegate.edit', compact('user'));
     }
 
     /**

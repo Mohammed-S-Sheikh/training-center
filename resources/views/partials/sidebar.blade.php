@@ -1,5 +1,3 @@
-{{-- @if(Auth::check() && Auth::user()->is_admin) --}}
-
 <!-- Page Sidebar -->
 <div class="page-sidebar">
     <a class="logo-box" href="{{ route('dashboard') }}">
@@ -13,11 +11,6 @@
                 <li class="active-page">
                     <a href="{{ route('dashboard') }}">
                         <i class="menu-icon icon-home4"></i><span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('cities.index') }}">
-                        <i class="menu-icon icon-inbox"></i><span>City</span>
                     </a>
                 </li>
                 <li>
@@ -44,5 +37,3 @@
         </div>
     </div>
 </div><!-- /Page Sidebar -->
-
-{{-- @endif --}}

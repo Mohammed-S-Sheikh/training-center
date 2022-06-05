@@ -27,7 +27,7 @@ Route::group([
     Route::get('/', DashboardController::class)->name('dashboard');
 
     Route::resources([
-        'cities' => CityController::class,
+        // 'cities' => CityController::class,
         'trainees' => TraineeController::class,
         'delegates' => DelegateController::class,
     ]);

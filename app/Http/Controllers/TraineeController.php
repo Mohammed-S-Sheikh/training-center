@@ -40,7 +40,7 @@ class TraineeController extends Controller
     {
         $trainee = Trainee::create($request->validated());
 
-        return redirect()->route('trainees.index')->with('success', 'Trainee created successfully.');
+        return redirect()->route('pages.trainee.index')->with('success', 'Trainee created successfully.');
     }
 
     /**
@@ -76,7 +76,7 @@ class TraineeController extends Controller
     {
         $trainee->update($request->validated());
 
-        return redirect()->route('trainees.index')->with('success', 'Trainee updated successfully.');
+        return redirect()->route('pages.trainee.index')->with('success', 'Trainee updated successfully.');
     }
 
     /**
@@ -89,6 +89,6 @@ class TraineeController extends Controller
     {
         $trainee->delete();
 
-        return redirect()->route('trainees.index')->with('success', 'Trainee deleted successfully.');
+        return redirect()->route('pages.trainee.index')->with('success', 'Trainee deleted successfully.');
     }
 }

@@ -12,14 +12,15 @@
         <title>{{ config('app.name') }}</title>
 
         <!-- Styles -->
-        @include('partials.links')
+        @include('partials.styles')
     </head>
     <body>
         <!-- Page Container -->
         <div class="page-container">
-            @include('partials.header')
-            @include('partials.sidebar')
-            
+            {{-- @if(Auth::check()) --}}
+                @include('partials.sidebar')
+            {{-- @endif --}}
+
             <!-- Page Content -->
             <div class="page-content">
                 @yield('content')
