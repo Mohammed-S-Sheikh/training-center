@@ -15,9 +15,9 @@ class TraineeController extends Controller
      */
     public function index()
     {
-        $trainees = Trainee::all();
+        $trainees = Trainee::with('user')->paginate();
 
-        return view('trainees.index', compact('trainees'));
+        return view('pages.trainee.index', compact('trainees'));
     }
 
     /**
@@ -27,7 +27,7 @@ class TraineeController extends Controller
      */
     public function create()
     {
-        return view('trainees.create');
+        return view('pages.trainee.create');
     }
 
     /**
@@ -38,9 +38,9 @@ class TraineeController extends Controller
      */
     public function store(StoreTraineeRequest $request)
     {
-        $trainee = Trainee::create($request->validated());
+        $trainee = Trainee::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
 
-        return redirect()->route('pages.trainee.index')->with('success', 'Trainee created successfully.');
+        return redirect()->route('trainees.index')->with('success', 'تم إضافة المتدرب بنجاح!');
     }
 
     /**
@@ -51,7 +51,7 @@ class TraineeController extends Controller
      */
     public function show(Trainee $trainee)
     {
-        return view('trainees.show', compact('trainee'));
+        return view('pages.trainee.show', compact('trainee'));
     }
 
     /**
@@ -62,7 +62,7 @@ class TraineeController extends Controller
      */
     public function edit(Trainee $trainee)
     {
-        return view('trainees.edit', compact('trainee'));
+        return view('pages.trainee.edit', compact('trainee'));
     }
 
     /**
@@ -76,7 +76,7 @@ class TraineeController extends Controller
     {
         $trainee->update($request->validated());
 
-        return redirect()->route('pages.trainee.index')->with('success', 'Trainee updated successfully.');
+        return redirect()->route('trainees.index')->with('success', 'Trainee updated successfully.');
     }
 
     /**
@@ -89,6 +89,6 @@ class TraineeController extends Controller
     {
         $trainee->delete();
 
-        return redirect()->route('pages.trainee.index')->with('success', 'Trainee deleted successfully.');
+        return redirect()->route('trainees.index')->with('success', 'Trainee deleted successfully.');
     }
 }

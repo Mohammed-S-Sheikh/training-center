@@ -7,7 +7,7 @@
 <!-- Page Inner -->
 <div class="page-inner">
     <div class="page-title">
-        <h3 class="breadcrumb-header">عرض كل المندوبين</h3>
+        <h3 class="breadcrumb-header">عرض كل المتدربين</h3>
     </div>
 
     @if(session('success'))
@@ -27,19 +27,19 @@
             <div class="col-md-12">
                 <div class="panel panel-white">
                     <div class="panel-heading">
-                        <h4 class="panel-title">عرض كل المندوبين</h4>
+                        <h4 class="panel-title">عرض كل المتدربين</h4>
                     </div>
                     <div class="panel-body">
-                        <button type="button" class="btn btn-success m-b-sm" data-toggle="modal" data-target="#myModal">إضافة مندوب</button>
+                        <button type="button" class="btn btn-success m-b-sm" data-toggle="modal" data-target="#myModal">إضافة متدرب</button>
 
-                        <form id="add-row-form" method="POST" action="{{ route('delegates.store') }}">
+                        <form id="add-row-form" method="POST" action="{{ route('trainees.store') }}">
                             @csrf
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left;"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">إضافة مندوب</h4>
+                                            <h4 class="modal-title" id="myModalLabel">إضافة متدرب</h4>
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
@@ -49,27 +49,27 @@
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <input type="number" id="phone-input" class="form-control" name="phone" placeholder="رقم الهاتف" required>
+                                                <input type="number" id="phone-input" class="form-control" name="phone" placeholder="رقم الهاتف">
                                                 @if ($errors->has('phone'))
                                                 <span class="text-danger">{{ $errors->first('phone') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <input type="email" id="position-input" class="form-control" name="email" placeholder="البريد الإلكتروني" required>
+                                                <input type="email" id="position-input" class="form-control" name="email" placeholder="البريد الإلكتروني">
                                                 @if ($errors->has('email'))
                                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" id="date-input" class="form-control date-picker" name="password" placeholder="كلمة المرور" required>
-                                                @if ($errors->has('password'))
-                                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                                                <input type="text" id="date-input" class="form-control date-picker" name="amount" placeholder="القيمة">
+                                                @if ($errors->has('amount'))
+                                                <span class="text-danger">{{ $errors->first('amount') }}</span>
                                                 @endif
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" id="date-input" class="form-control date-picker" name="password_confirmation" placeholder="تأكيد كلمة المرور" required>
-                                                @if ($errors->has('password_confirmation'))
-                                                <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
+                                                <input type="text" id="date-input" class="form-control date-picker" name="discount" placeholder="التخفيض">
+                                                @if ($errors->has('discount'))
+                                                <span class="text-danger">{{ $errors->first('discount') }}</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -89,24 +89,30 @@
                                         <th>الإسم</th>
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
+                                        <th>القيمة</th>
+                                        <th>التخفيض</th>
+                                        <th>بواسطة</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($delegates as $delegate)
+                                    @forelse($trainees as $trainee)
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
-                                        <td>{{ $delegate->name }}</td>
-                                        <td>{{ $delegate->email }}</td>
-                                        <td>{{ $delegate->phone }}</td>
+                                        <td>{{ $trainee->name }}</td>
+                                        <td>{{ $trainee->email }}</td>
+                                        <td>{{ $trainee->phone }}</td>
+                                        <td>{{ $trainee->amount }}</td>
+                                        <td>{{ $trainee->discount }}</td>
+                                        <td>{{ $trainee->user->name }}</td>
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="4" class="text-center"> لا يوجد مندوبين</td>
+                                        <td colspan="7" class="text-center"> لا يوجد متدربين</td>
                                     </tr>
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $delegates->links() }}
+                            {{ $trainees->links() }}
                         </div>
                     </div>
                 </div>
