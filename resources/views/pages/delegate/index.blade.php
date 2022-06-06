@@ -15,7 +15,7 @@
         {{ session('success') }}
     </div>
     @endif
-    
+
     @if(session('error'))
     <div class="alert alert-danger mb-3" role="alert">
         {{ session('error') }}
@@ -31,7 +31,7 @@
                     </div>
                     <div class="panel-body">
                         <button type="button" class="btn btn-success m-b-sm" data-toggle="modal" data-target="#myModal">إضافة مندوب</button>
-                            
+
                         <form id="add-row-form" method="POST" action="{{ route('delegates.store') }}">
                             @csrf
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\DelegateController;
@@ -20,13 +21,16 @@ Route::view('login', 'pages.login')->name('login');
 Route::group([
     'middleware' => ['auth'],
 ], function () {
-    Route::resources([
-        'trainees' => TraineeController::class,
-        'delegates' => DelegateController::class,
-    ]);
+    Route::resource('trainees', TraineeController::class);
+    Route::resource('delegates', DelegateController::class)->middleware('admin');
 
     Route::fallback(function () {
-        $delegates = App\Models\User::orderBy('id', 'DESC')->paginate(10);
-        return view('pages.delegate.index', compact('delegates'));
+        if (Auth::user()->is_admin) {
+            $delegates = App\Models\User::orderBy('id', 'DESC')->paginate(10);
+            return view('pages.delegate.index', compact('delegates'));
+        } else {
+            $trainees = App\Models\Trainee::orderBy('id', 'DESC')->paginate(10);
+            return view('pages.trainee.index', compact('trainees'));
+        }
     });
 });

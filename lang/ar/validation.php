@@ -141,5 +141,6 @@ return [
         'password' => 'رمز المرور',
         'password_confirmation' => 'تأكيد رمز المرور',
         'is_admin' => 'مشرف على المندوبين',
-    ]
+    ],
+
 ];
