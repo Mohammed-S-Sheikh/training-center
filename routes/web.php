@@ -15,6 +15,8 @@ use App\Http\Controllers\DelegateController;
 |
 */
 
+Route::view('login', 'pages.login')->name('login');
+
 Route::group([
     'middleware' => ['auth'],
 ], function () {
