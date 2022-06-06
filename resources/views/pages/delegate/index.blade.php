@@ -2,6 +2,8 @@
 
 @section('content')
 
+@include('partials.header')
+
 <!-- Page Inner -->
 <div class="page-inner">
     <div class="page-title">
@@ -16,7 +18,7 @@
                 </div>
                 <div class="panel-body">
                     <a class="btn btn-success m-b-sm">إضافة مندوب</a>
-                    
+
                     <div class="table-responsive">
                         <table id="example3" class="display table" style="width: 100%; cellspacing: 0;">
                             <thead>
@@ -41,14 +43,6 @@
                                 </tr>
                                 @endforelse
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>#</th>
-                                    <th>الإسم</th>
-                                    <th>البريد الإلكتروني</th>
-                                    <th>رقم الهاتف</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

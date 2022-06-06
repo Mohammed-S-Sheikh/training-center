@@ -1,10 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CityController;
-use App\Http\Controllers\DelegateController;
 use App\Http\Controllers\TraineeController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DelegateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,18 +15,16 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::get('login', function () {
-    return view('pages.login');
-});
-
 Route::group([
-    // 'middleware' => ['auth'],
+    'middleware' => ['auth'],
 ], function () {
-    Route::get('/', DashboardController::class)->name('dashboard');
-
     Route::resources([
-        // 'cities' => CityController::class,
         'trainees' => TraineeController::class,
         'delegates' => DelegateController::class,
     ]);
+
+    Route::fallback(function () {
+        $delegates = App\Models\User::paginate();
+        return view('pages.delegate.index', compact('delegates'));
+    });
 });

@@ -17,9 +17,9 @@
     <body dir="rtl">
         <!-- Page Container -->
         <div class="page-container">
-            {{-- @if(Auth::check()) --}}
+            @if(Auth::check())
                 @include('partials.sidebar')
-            {{-- @endif --}}
+            @endif
 
             <!-- Page Content -->
             <div class="page-content">

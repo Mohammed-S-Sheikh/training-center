@@ -1,37 +1,31 @@
 <!-- Page Sidebar -->
 <div class="page-sidebar">
-    <a class="logo-box" href="{{ route('dashboard') }}">
+    <a class="logo-box" href="#" onclick="return false">
         <span>{{ config('app.name') }}</span>
-        <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i>
-        <i class="icon-close" id="sidebar-toggle-button-close"></i>
     </a>
     <div class="page-sidebar-inner">
         <div class="page-sidebar-menu">
             <ul class="accordion-menu">
-                <li class="active-page">
-                    <a href="{{ route('dashboard') }}">
-                        <i class="menu-icon icon-home4"></i><span>الرئيسية</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('delegates.index') }}">
-                        <i class="menu-icon icon-inbox"></i><span>المندوبين</span>
-                    </a>
-                </li>
-                <li>
+                @if(Auth::user()->is_admin)
+                    <li class="{{ request()->is('delegates') ? 'active-page' : '' }}">
+                        <a href="{{ route('delegates.index') }}">
+                            <i class="menu-icon fa fa-car"></i><span>المندوبين</span>
+                        </a>
+                    </li>
+                @endif
+                <li class="{{ request()->is('trainees') ? 'active-page' : '' }}">
                     <a href="{{ route('trainees.index') }}">
-                        <i class="menu-icon icon-inbox"></i><span>المتدربين</span>
+                        <i class="menu-icon icon-people"></i><span>المتدربين</span>
                     </a>
                 </li>
                 <li class="menu-divider"></li>
-                {{-- <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <button type="submit">Logout</button>
-                </form> --}}
                 <li>
-                    <a href="{{ route('logout') }}">
-                        <i class="menu-icon icon-inbox"></i><span>Logout</span>
-                    </a>
+                    <form action="{{ route('logout') }}" method="post">
+                        @csrf
+                        <button type="submit">
+                            <i class="menu-icon fa fa-sign-out"></i><span>تسجيل الخروج</span>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
