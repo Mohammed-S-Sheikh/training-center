@@ -89,6 +89,7 @@
                                         <th>الإسم</th>
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
+                                        <th>إعدادات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -97,7 +98,20 @@
                                         <td>{{ ++$loop->index }}</td>
                                         <td>{{ $delegate->name }}</td>
                                         <td>{{ $delegate->email }}</td>
-                                        <td>{{ $delegate->phone }}</td>
+                                        <td>{{ $delegate->phone ?? '-' }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary m-b-sm" data-toggle="modal" data-target="#myModal">
+                                                <i class="menu-icon icon-pencil"></i>
+                                            </button>
+
+                                            <form action="{{ route('delegates.destroy', $delegate->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger m-b-sm" data-toggle="modal" data-target="#myModal">
+                                                    <i class="menu-icon fa fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                     @empty
                                     <tr>

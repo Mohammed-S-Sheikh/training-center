@@ -92,6 +92,7 @@
                                         <th>القيمة</th>
                                         <th>التخفيض</th>
                                         <th>بواسطة</th>
+                                        <th>إعدادات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -104,6 +105,15 @@
                                         <td>{{ $trainee->amount }}</td>
                                         <td>{{ $trainee->discount }}</td>
                                         <td>{{ $trainee->user->name }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary m-b-sm" data-toggle="modal" data-target="#myModal">
+                                                <i class="menu-icon icon-pencil"></i>
+                                            </button>
+
+                                            <button type="button" class="btn btn-danger m-b-sm" data-toggle="modal" data-target="#myModal">
+                                                <i class="menu-icon fa fa-trash"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                     @empty
                                     <tr>
