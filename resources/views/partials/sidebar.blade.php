@@ -23,7 +23,8 @@
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button type="submit" class="logout">
-                            <i class="menu-icon fa fa-sign-out"></i><span>تسجيل الخروج</span>
+                            <i class="menu-icon fa fa-sign-out"></i>
+                            <span>تسجيل الخروج</span>
                         </button>
                     </form>
                 </li>

@@ -22,7 +22,7 @@
             @endif
 
             <!-- Page Content -->
-            <div class="page-content" style="width: {{ Auth::check() ? 'calc(100% - 240px)' : '100%' }}">
+            <div class="page-content" style="width: {{ Auth::check() ? null : '100%' }}">
                 @yield('content')
             </div><!-- /Page Content -->
         </div><!-- /Page Container -->
