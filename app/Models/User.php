@@ -21,7 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone'
     ];
+
+    protected $perPage = 10;
 
     /**
      * The attributes that should be hidden for serialization.

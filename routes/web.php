@@ -24,7 +24,7 @@ Route::group([
     ]);
 
     Route::fallback(function () {
-        $delegates = App\Models\User::paginate();
+        $delegates = App\Models\User::orderBy('id', 'DESC')->paginate(10);
         return view('pages.delegate.index', compact('delegates'));
     });
 });

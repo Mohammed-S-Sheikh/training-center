@@ -15,7 +15,7 @@ class DelegateController extends Controller
      */
     public function index()
     {
-        $delegates = User::all();
+        $delegates = User::orderBy('id', 'DESC')->paginate();
 
         return view('pages.delegate.index', compact('delegates'));
     }
@@ -40,7 +40,7 @@ class DelegateController extends Controller
     {
         $user = User::create($request->validated());
 
-        return redirect()->route('delegates.index')->with('success', 'User created successfully.');
+        return redirect()->route('delegates.index')->with('success', 'تم إضافة المندوب بنجاح!');
     }
 
     /**
