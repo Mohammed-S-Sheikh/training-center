@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use App\Models\Trainee;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TraineeController;
@@ -26,10 +28,10 @@ Route::group([
 
     Route::fallback(function () {
         if (Auth::user()->is_admin) {
-            $delegates = App\Models\User::orderBy('id', 'DESC')->paginate(10);
+            $delegates = User::orderBy('id', 'DESC')->paginate(10);
             return view('pages.delegate.index', compact('delegates'));
         } else {
-            $trainees = App\Models\Trainee::orderBy('id', 'DESC')->paginate(10);
+            $trainees = Trainee::orderBy('id', 'DESC')->paginate(10);
             return view('pages.trainee.index', compact('trainees'));
         }
     });

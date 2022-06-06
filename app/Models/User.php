@@ -46,9 +46,8 @@ class User extends Authenticatable
     ];
 
     public const FILTERS = [
-        \App\Services\Pipeline\User\Email::class,
-        \App\Services\Pipeline\User\Name::class,
-        \App\Services\Pipeline\User\Phone::class,
+        \App\Services\Pipeline\User\IsAdmin::class,
+        \App\Services\Pipeline\User\Search::class,
     ];
 
     public function trainees()
