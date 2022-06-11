@@ -39,6 +39,7 @@
                                         <th>الإسم</th>
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
+                                        <th>مسؤول</th>
                                         <th>إعدادات</th>
                                     </tr>
                                 </thead>
@@ -50,9 +51,16 @@
                                         <td>{{ $delegate->email }}</td>
                                         <td>{{ $delegate->phone ?? '-' }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                            @if ($delegate->is_admin)
+                                                <span class="badge bg-success">مسؤول</span>
+                                            @else
+                                                <span class="badge bg-warning">غير مسؤول</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('delegates.edit', ['delegate' => $delegate->id]) }}" class="btn btn-primary">
                                                 <i class="menu-icon icon-pencil"></i>
-                                            </button>
+                                            </a>
 
                                             <button type="button" class="btn btn-danger" onclick="deleteDelegate({{ $delegate->id }})">
                                                 <i class="menu-icon fa fa-trash"></i>

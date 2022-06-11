@@ -57,9 +57,9 @@
                                         <td>{{ $trainee->discount }}</td>
                                         <td>{{ $trainee->user->name }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-primary">
+                                            <a href="{{ route('trainees.edit', ['trainee' => $trainee->id]) }}" class="btn btn-primary">
                                                 <i class="menu-icon icon-pencil"></i>
-                                            </button>
+                                            </a>
 
                                             <button type="button" class="btn btn-danger" onclick="deleteTrainee({{ $trainee->id }})">
                                                 <i class="menu-icon fa fa-trash"></i>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+
+use App\Models\User;
+use Hash;
 
 class DelegateController extends Controller
 {
@@ -38,7 +40,13 @@ class DelegateController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $user = User::create($request->validated());
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->is_admin = $request->is_admin?? 0;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
         return redirect()->route('delegates.index')->with('success', 'تم إضافة المندوب بنجاح');
     }
@@ -74,7 +82,16 @@ class DelegateController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->is_admin = $request->is_admin;
+
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
 
         return redirect()->route('delegates.index')->with('success', 'تم تحديث المندوب بنجاح');
     }

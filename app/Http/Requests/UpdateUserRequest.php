@@ -23,11 +23,13 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
+        $user = $this->route('delegate');
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
-            'email' => ['required', 'email', 'min:3', 'max:255'],
-            'password' => ['required', 'string', 'min:3', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email,'.$user->id, 'min:3', 'max:255'],
+            'password' => ['nullable', 'string', 'min:3', 'max:255'],
             'phone' => ['nullable', 'string', 'min:9', 'max:255'],
+            'is_admin' => ['nullable', 'in:1']
         ];
     }
 }

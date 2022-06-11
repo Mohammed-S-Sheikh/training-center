@@ -7,7 +7,7 @@
 <!-- Page Inner -->
 <div class="page-inner">
     <div class="page-title">
-        <h3 class="breadcrumb-header">إضافة مندوب</h3>
+        <h3 class="breadcrumb-header">تعديل متدرب</h3>
     </div>
 
     @if(session('success'))
@@ -27,49 +27,44 @@
             <div class="col-md-12">
                 <div class="panel panel-white">
                     <div class="panel-heading">
-                        <h4 class="panel-title">إضافة مندوب</h4>
+                        <h4 class="panel-title">تعديل متدرب</h4>
                     </div>
                     <div class="panel-body">
-                        <form id="add-row-form" method="POST" action="{{ route('delegates.store') }}">
+                        <form id="add-row-form" method="POST" action="{{ route('trainees.update', ['trainee' => $trainee->id]) }}">
                             @csrf
+                            @method('PUT')
                             <div class="form-group">
-                                <input type="text" id="name-input" class="form-control" name="name" placeholder="الإسم" value="{{ old('name') }}" required>
+                                <input type="text" id="name-input" class="form-control" name="name" placeholder="الإسم" value="{{ $trainee->name }}" required>
                                 @if ($errors->has('name'))
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
-                                <input type="number" id="phone-input" class="form-control" name="phone" placeholder="رقم الهاتف" value="{{ old('phone') }}" required>
+                                <input type="number" id="phone-input" class="form-control" name="phone" placeholder="رقم الهاتف" value="{{ $trainee->phone }}">
                                 @if ($errors->has('phone'))
                                 <span class="text-danger">{{ $errors->first('phone') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
-                                <input type="email" id="position-input" class="form-control" name="email" placeholder="البريد الإلكتروني" value="{{ old('email') }}" required>
+                                <input type="email" id="position-input" class="form-control" name="email" placeholder="البريد الإلكتروني" value="{{ $trainee->email }}">
                                 @if ($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
-                                <input type="password" id="date-input" class="form-control date-picker" name="password" placeholder="كلمة المرور" required>
-                                @if ($errors->has('password'))
-                                <span class="text-danger">{{ $errors->first('password') }}</span>
+                                <input type="text" id="date-input" class="form-control date-picker" name="amount" placeholder="القيمة" value="{{ $trainee->amount }}">
+                                @if ($errors->has('amount'))
+                                <span class="text-danger">{{ $errors->first('amount') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
-                                <input type="password" id="date-input" class="form-control date-picker" name="password_confirmation" placeholder="تأكيد كلمة المرور" required>
-                                @if ($errors->has('password_confirmation'))
-                                <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" id="date-input" class="form-control date-picker" value="1" name="is_admin" {{ old('is_admin')? 'checked' : null }}>مسؤول
-                                @if ($errors->has('is_admin'))
-                                <span class="text-danger">{{ $errors->first('is_admin') }}</span>
+                                <input type="text" id="date-input" class="form-control date-picker" name="discount" placeholder="التخفيض" value="{{ $trainee->discount }}">
+                                @if ($errors->has('discount'))
+                                <span class="text-danger">{{ $errors->first('discount') }}</span>
                                 @endif
                             </div>
                             
-                            <button type="submit" id="add-row" class="btn btn-success pull-left m-l-xs">إضافة</button>
+                            <button type="submit" id="add-row" class="btn btn-success pull-left m-l-xs">تعديل</button>
                                     </div>
                                 </div>
                             </div>
