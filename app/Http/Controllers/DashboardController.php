@@ -17,17 +17,15 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         $delegatesCount = User::count();
-        $traineesCount = Trainee::count();
-        $totalRevenue = Trainee::sum('amount');
+        $trainees = Trainee::all();
         $delegates = User::with('trainees:id,amount,discount,user_id')->withCount('trainees')->paginate();
         $settings = Setting::all();
 
-        return view('pages.dashboard', compact(
-            'delegates',
-            'delegatesCount',
-            'traineesCount',
-            'totalRevenue',
-            'settings',
+        return view('pages.dashboard', array(
+            'delegates' => $delegates,
+            'delegatesCount' => $delegatesCount,
+            'trainees' => $trainees,
+            'settings' => $settings,
         ));
     }
 }

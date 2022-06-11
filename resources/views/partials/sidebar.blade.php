@@ -9,7 +9,7 @@
                 @if(Auth::user()->is_admin)
                     <li class="{{ request()->is('/') ? 'active-page' : '' }}">
                         <a href="{{ route('dashboard') }}">
-                            <i class="menu-icon fa fa-bar-chart"></i><span>الصفحة الرئيسية</span>
+                            <i class="menu-icon fa fa-bar-chart"></i><span>لوحة التحكم</span>
                         </a>
                     </li>
                     <li class="{{ request()->is('delegates') ? 'active-page' : '' }}">

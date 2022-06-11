@@ -7,7 +7,7 @@
 <!-- Page Inner -->
 <div class="page-inner">
     <div class="page-title">
-        <h3 class="breadcrumb-header">الصفحة الرئيسية</h3>
+        <h3 class="breadcrumb-header">لوحة التحكم</h3>
     </div>
     <div id="main-wrapper">
         <div class="row">
@@ -51,7 +51,7 @@
                             <p class="stats-info">عدد المندوبين</p>
                         </div>
                         <div class="pull-right">
-                            <i class="icon-arrow_upward stats-icon"></i>
+                            <i class="fa fa-car stats-icon"></i>
                         </div>
                     </div>
                 </div>
@@ -60,11 +60,11 @@
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
-                            <span class="stats-number">{{ $traineesCount }}</span>
+                            <span class="stats-number">{{ $trainees->count() }}</span>
                             <p class="stats-info">عدد المتدربين</p>
                         </div>
                         <div class="pull-right">
-                            <i class="icon-arrow_upward stats-icon"></i>
+                            <i class="icon-people stats-icon"></i>
                         </div>
                     </div>
                 </div>
@@ -73,11 +73,24 @@
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
-                            <span class="stats-number">{{ $totalRevenue  }}</span>
-                            <p class="stats-info">إجمالي الأرباح</p>
+                            <span class="stats-number">{{ $trainees->sum('amount')  }}</span>
+                            <p class="stats-info">إجمالي القيم</p>
                         </div>
                         <div class="pull-right">
-                            <i class="icon-arrow_downward stats-icon"></i>
+                            <i class="fa fa-money stats-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-white stats-widget">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <span class="stats-number">{{ $trainees->sum('amount') - $trainees->sum('discount')  }}</span>
+                            <p class="stats-info">صافي الأرباح</p>
+                        </div>
+                        <div class="pull-right">
+                            <i class="icon-arrow_upward stats-icon"></i>
                         </div>
                     </div>
                 </div>
