@@ -40,7 +40,7 @@ class TraineeController extends Controller
     {
         $trainee = Trainee::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
 
-        return redirect()->route('trainees.index')->with('success', 'تم إضافة المتدرب بنجاح!');
+        return redirect()->route('trainees.index')->with('success', 'تم إضافة المتدرب بنجاح');
     }
 
     /**
@@ -76,7 +76,7 @@ class TraineeController extends Controller
     {
         $trainee->update($request->validated());
 
-        return redirect()->route('trainees.index')->with('success', 'Trainee updated successfully.');
+        return redirect()->route('trainees.index')->with('success', 'تم تحديث المتدرب بنجاح');
     }
 
     /**
@@ -89,6 +89,6 @@ class TraineeController extends Controller
     {
         $trainee->delete();
 
-        return redirect()->route('trainees.index')->with('success', 'Trainee deleted successfully.');
+        return redirect()->route('trainees.index')->with('success', 'تم حذف المتدرب بنجاح');
     }
 }

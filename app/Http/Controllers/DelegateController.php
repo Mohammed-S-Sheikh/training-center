@@ -40,7 +40,7 @@ class DelegateController extends Controller
     {
         $user = User::create($request->validated());
 
-        return redirect()->route('delegates.index')->with('success', 'تم إضافة المندوب بنجاح!');
+        return redirect()->route('delegates.index')->with('success', 'تم إضافة المندوب بنجاح');
     }
 
     /**
@@ -76,7 +76,7 @@ class DelegateController extends Controller
     {
         $user->update($request->validated());
 
-        return redirect()->route('delegates.index')->with('success', 'User updated successfully.');
+        return redirect()->route('delegates.index')->with('success', 'تم تحديث المندوب بنجاح');
     }
 
     /**
@@ -89,6 +89,6 @@ class DelegateController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('delegates.index')->with('success', 'User deleted successfully.');
+        return redirect()->route('delegates.index')->with('success', 'تم حذف المندوب بنجاح');
     }
 }

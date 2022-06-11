@@ -30,57 +30,8 @@
                         <h4 class="panel-title">عرض كل المتدربين</h4>
                     </div>
                     <div class="panel-body">
-                        <button type="button" class="btn btn-success m-b-sm" data-toggle="modal" data-target="#myModal">إضافة متدرب</button>
+                        <a href="{{ route('trainees.create') }}" class="btn btn-success m-b-sm">إضافة متدرب</a>
 
-                        <form id="add-row-form" method="POST" action="{{ route('trainees.store') }}">
-                            @csrf
-                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left;"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">إضافة متدرب</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <input type="text" id="name-input" class="form-control" name="name" placeholder="الإسم" required>
-                                                @if ($errors->has('name'))
-                                                <span class="text-danger">{{ $errors->first('name') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="number" id="phone-input" class="form-control" name="phone" placeholder="رقم الهاتف">
-                                                @if ($errors->has('phone'))
-                                                <span class="text-danger">{{ $errors->first('phone') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="email" id="position-input" class="form-control" name="email" placeholder="البريد الإلكتروني">
-                                                @if ($errors->has('email'))
-                                                <span class="text-danger">{{ $errors->first('email') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" id="date-input" class="form-control date-picker" name="amount" placeholder="القيمة">
-                                                @if ($errors->has('amount'))
-                                                <span class="text-danger">{{ $errors->first('amount') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" id="date-input" class="form-control date-picker" name="discount" placeholder="التخفيض">
-                                                @if ($errors->has('discount'))
-                                                <span class="text-danger">{{ $errors->first('discount') }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" id="add-row" class="btn btn-success" style="float: left;">إضافة</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="float: left;">إلغاء</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            </form>
                         <div class="table-responsive dataTables_wrapper">
                             <table id="example3" class="display table" style="width: 100%; cellspacing: 0;">
                                 <thead>
@@ -106,11 +57,11 @@
                                         <td>{{ $trainee->discount }}</td>
                                         <td>{{ $trainee->user->name }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-primary m-b-sm" data-toggle="modal" data-target="#myModal">
+                                            <button type="button" class="btn btn-primary">
                                                 <i class="menu-icon icon-pencil"></i>
                                             </button>
 
-                                            <button type="button" class="btn btn-danger m-b-sm" data-toggle="modal" data-target="#myModal">
+                                            <button type="button" class="btn btn-danger" onclick="deleteTrainee({{ $trainee->id }})">
                                                 <i class="menu-icon fa fa-trash"></i>
                                             </button>
                                         </td>
@@ -131,4 +82,38 @@
     </div><!-- /Page Inner -->
 </div>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left;"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">حذف متدرب</h4>
+            </div>
+            <div class="modal-body">
+                <p>هل متأكد من حذف هذا المتدرب؟</p>
+            </div>
+            <div class="modal-footer">
+                <form id="delete-tainee" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" id="add-row" class="btn btn-danger" style="float: left;">حذف</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="float: left;">إلغاء</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@section('scripts')
+    <script>
+        function deleteTrainee(traineeId) {
+            console.log(traineeId);
+            let url = "{{ route('trainees.destroy', ':trainee') }}";
+            url = url.replace(':trainee', traineeId);
+            $("#delete-tainee").attr("action", url);
+            $('#myModal').modal('show');
+        }
+    </script>
 @endsection
