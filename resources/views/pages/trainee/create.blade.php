@@ -69,9 +69,9 @@
                             </div> --}}
 
                             <button type="submit" id="add-row" class="btn btn-success pull-left m-l-xs">إضافة</button>
-                                    </div>
+                                    {{-- </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </form>
                     </div>
                 </div>

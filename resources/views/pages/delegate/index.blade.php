@@ -30,7 +30,39 @@
                         <h4 class="panel-title">عرض كل المندوبين</h4>
                     </div>
                     <div class="panel-body">
-                        <a href="{{ route('delegates.create') }}" class="btn btn-success m-b-sm">إضافة مندوب</a>
+
+                        <div class="row">
+                            <div class="col-lg-2 col-xs-6 col-lg-offset-9 pull-right">
+                                <a href="{{ route('delegates.create') }}" class="btn btn-success m-b-sm">إضافة مندوب</a>
+                            </div>
+                            <div class="col-lg-1 col-xs-4 pull-left">
+                                <button type="button" class="btn bg-gray m-b-sm" onclick="toggleField()">
+                                    <i class="fa fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row filters" style="width:100%;">
+                            <form method="GET" action="{{ route('delegates.index') }}">
+                                @csrf
+                                {{-- <div class="form-group col-lg-2 col-xs-12 pull-right">
+                                    <input type="text" class="form-control" name="amount" placeholder="القيمة" value="{{ old('amount') }}">
+                                </div>
+                                <div class="form-group col-lg-2 col-xs-12 pull-right">
+                                    <input type="text" class="form-control" name="discount" placeholder="التخفيض" value="{{ old('discount') }}">
+                                </div> --}}
+                                <div class="form-group col-lg-2 col-xs-12 pull-right m-t-xxs">
+                                    <input type="checkbox" class="form-control" name="is_admin" value="{{ old('is_admin') }}"/>مسؤول
+                                </div>
+                                <div class="form-group col-lg-3 col-xs-12 pull-right">
+                                    <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
+                                </div>
+                                <div class="form-group col-lg-2 col-xs-12">
+                                    <input type="submit" class="btn btn-success" value="بحث"/>
+                                </div>
+                            </form>
+                        </div>
+
                         <div class="table-responsive dataTables_wrapper">
                             <table id="example3" class="display table" style="width: 100%; cellspacing: 0;">
                                 <thead>
@@ -109,12 +141,15 @@
 
 @section('scripts')
     <script>
+        $(".filters").toggle();
         function deleteDelegate(id) {
-            console.log(id);
             let url = "{{ route('delegates.destroy', ':user') }}";
             url = url.replace(':user', id);
             $("#delete-delegate").attr("action", url);
             $('#myModal').modal('show');
+        }
+        function toggleField(){
+            $(".filters").toggle();
         }
     </script>
 @endsection

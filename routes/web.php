@@ -22,11 +22,11 @@ use App\Http\Controllers\DashboardController;
 
 Route::view('login', 'pages.login')->name('login');
 
-Route::get('/', DashboardController::class)->name('dashboard');
-
 Route::group([
     'middleware' => ['auth'],
 ], function () {
+    Route::get('/', DashboardController::class)->name('dashboard');
+
     Route::resource('trainees', TraineeController::class)->middleware('has_access:show,edit,update,destroy');
     Route::resource('delegates', DelegateController::class)->middleware('admin');
     Route::resource('settings', SettingController::class)->only('update');

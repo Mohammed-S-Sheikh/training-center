@@ -51,7 +51,7 @@
                             <p class="stats-info">عدد المندوبين</p>
                         </div>
                         <div class="pull-right">
-                            <i class="fa fa-car stats-icon"></i>
+                            <i class="fa fa-car stats-icon text-warning"></i>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                             <p class="stats-info">عدد المتدربين</p>
                         </div>
                         <div class="pull-right">
-                            <i class="icon-people stats-icon"></i>
+                            <i class="icon-people stats-icon text-primary"></i>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                             <p class="stats-info">إجمالي القيم</p>
                         </div>
                         <div class="pull-right">
-                            <i class="fa fa-money stats-icon"></i>
+                            <i class="fa fa-money stats-icon text-muted"></i>
                         </div>
                     </div>
                 </div>

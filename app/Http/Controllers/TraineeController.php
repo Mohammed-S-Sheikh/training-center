@@ -6,6 +6,7 @@ use App\Models\Setting;
 use App\Models\Trainee;
 use App\Http\Requests\StoreTraineeRequest;
 use App\Http\Requests\UpdateTraineeRequest;
+use App\Models\User;
 
 class TraineeController extends Controller
 {
@@ -23,7 +24,9 @@ class TraineeController extends Controller
             }
         )->paginate();
 
-        return view('pages.trainee.index', compact('trainees'));
+        $delegates = User::all();
+
+        return view('pages.trainee.index', compact('trainees', 'delegates'));
     }
 
     /**

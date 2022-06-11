@@ -30,7 +30,42 @@
                         <h4 class="panel-title">عرض كل المتدربين</h4>
                     </div>
                     <div class="panel-body">
-                        <a href="{{ route('trainees.create') }}" class="btn btn-success m-b-sm">إضافة متدرب</a>
+                        <div class="row">
+                            <div class="col-lg-2 col-xs-6 col-lg-offset-9 pull-right">
+                                <a href="{{ route('trainees.create') }}" class="btn btn-success m-b-sm">إضافة متدرب</a>
+                            </div>
+                            <div class="col-lg-1 col-xs-4 pull-left">
+                                <button type="button" class="btn bg-gray m-b-sm" onclick="toggleField()">
+                                    <i class="fa fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="row filters" style="width:100%;">
+                            <form method="GET" action="{{ route('trainees.index') }}">
+                                @csrf
+                                <div class="form-group col-lg-2 col-xs-12 pull-right">
+                                    <input type="text" class="form-control" name="amount" placeholder="القيمة" value="{{ old('amount') }}">
+                                </div>
+                                <div class="form-group col-lg-2 col-xs-12 pull-right">
+                                    <input type="text" class="form-control" name="discount" placeholder="التخفيض" value="{{ old('discount') }}">
+                                </div>
+                                <div class="form-group col-lg-3 col-xs-12 pull-right">
+                                    <select class="form-control" name="user_id">
+                                        <option vlaue="">إختر مندوب</option>
+                                        @foreach ($delegates as $delegate)
+                                            <option value="{{ $delegate->id }}" {{ old('user_id') == $delegate->id? 'selected' : null }}>{{ $delegate->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-3 col-xs-12 pull-right">
+                                    <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
+                                </div>
+                                <div class="form-group col-lg-2 col-xs-12">
+                                    <input type="submit" class="btn btn-success" value="بحث"/>
+                                </div>
+                            </form>
+                        </div>
 
                         <div class="table-responsive dataTables_wrapper">
                             <table id="example3" class="display table" style="width: 100%; cellspacing: 0;">
@@ -112,12 +147,16 @@
 
 @section('scripts')
     <script>
+        $(".filters").toggle();
         function deleteTrainee(traineeId) {
             console.log(traineeId);
             let url = "{{ route('trainees.destroy', ':trainee') }}";
             url = url.replace(':trainee', traineeId);
             $("#delete-tainee").attr("action", url);
             $('#myModal').modal('show');
+        }
+        function toggleField(){
+            $(".filters").toggle();
         }
     </script>
 @endsection
