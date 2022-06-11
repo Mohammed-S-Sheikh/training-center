@@ -9,7 +9,10 @@ abstract class Filter
 {
     public function handle($request, Closure $next)
     {
-        if (request()->has($this->filterName())) {
+        if (
+            request()->has($this->filterName()) &&
+            !empty(request($this->filterName()))
+        ) {
             return $this->applyFilter($next($request));
         }
 

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Setting;
 use App\Models\Trainee;
+use Illuminate\Pipeline\Pipeline;
 use App\Http\Requests\StoreTraineeRequest;
 use App\Http\Requests\UpdateTraineeRequest;
-use App\Models\User;
 
 class TraineeController extends Controller
 {
@@ -17,12 +18,15 @@ class TraineeController extends Controller
      */
     public function index()
     {
-        $trainees = Trainee::with('user')->when(
-            !auth()->user()->is_admin,
-            function ($query) {
+        $trainees = app(Pipeline::class)
+            ->send(Trainee::query())
+            ->through(Trainee::FILTERS)
+            ->thenReturn()
+            ->with('user')
+            ->when(!auth()->user()->is_admin, function ($query) {
                 return $query->where('user_id', auth()->id());
-            }
-        )->paginate();
+            })
+            ->paginate();
 
         $delegates = User::all();
 
@@ -47,10 +51,13 @@ class TraineeController extends Controller
      */
     public function store(StoreTraineeRequest $request)
     {
-        $request->amount = $request->amount ?: Setting::where('key', 'course_amount')->value('value');
-        $request->discount = $request->discount ?: Setting::where('key', 'course_discount')->value('value');
-
-        $trainee = Trainee::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
+        $trainee = Trainee::create(array_merge(
+            $request->validated(), [
+                'user_id' => auth()->id(),
+                'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
+                'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),
+            ]
+        ));
 
         return redirect()->route('trainees.index')->with('success', 'تم إضافة المتدرب بنجاح');
     }
@@ -86,10 +93,13 @@ class TraineeController extends Controller
      */
     public function update(UpdateTraineeRequest $request, Trainee $trainee)
     {
-        $request->amount = $request->amount ?: Setting::where('key', 'course_amount')->value('value');
-        $request->discount = $request->discount ?: Setting::where('key', 'course_discount')->value('value');
-
-        $trainee->update($request->validated());
+        $trainee->update(array_merge(
+            $request->validated(), [
+                'user_id' => auth()->id(),
+                'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
+                'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),
+            ]
+        ));
 
         return redirect()->route('trainees.index')->with('success', 'تم تحديث المتدرب بنجاح');
     }

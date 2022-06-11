@@ -43,25 +43,28 @@
 
                         <div class="row filters" style="width:100%;">
                             <form method="GET" action="{{ route('trainees.index') }}">
-                                @csrf
-                                <div class="form-group col-lg-2 col-xs-12 pull-right">
-                                    <input type="text" class="form-control" name="amount" placeholder="القيمة" value="{{ old('amount') }}">
-                                </div>
-                                <div class="form-group col-lg-2 col-xs-12 pull-right">
-                                    <input type="text" class="form-control" name="discount" placeholder="التخفيض" value="{{ old('discount') }}">
-                                </div>
-                                <div class="form-group col-lg-3 col-xs-12 pull-right">
-                                    <select class="form-control" name="user_id">
-                                        <option vlaue="">إختر مندوب</option>
-                                        @foreach ($delegates as $delegate)
-                                            <option value="{{ $delegate->id }}" {{ old('user_id') == $delegate->id? 'selected' : null }}>{{ $delegate->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                {{-- @csrf --}}
                                 <div class="form-group col-lg-3 col-xs-12 pull-right">
                                     <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
                                 </div>
-                                <div class="form-group col-lg-2 col-xs-12">
+                                <div class="form-group col-lg-2 col-xs-12 pull-right">
+                                    <select class="form-control" name="user_id">
+                                        <option vlaue="" disabled selected>إختر مندوب</option>
+                                        @foreach ($delegates as $delegate)
+                                            <option value="{{ $delegate->id }}" @selected(old('user_id') == $delegate->id)>{{ $delegate->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-lg-2 col-xs-12 pull-right">
+                                    <label for="created_at">تاريخ الإشتراك:</label>
+                                </div>
+                                <div class="form-group col-lg-2 col-xs-6 pull-right">
+                                    <input type="date" class="form-control" name="created_at[]" value="{{ old('created_at[]') }}">
+                                </div>
+                                <div class="form-group col-lg-2 col-xs-6 pull-right">
+                                    <input type="date" class="form-control" name="created_at[]" value="{{ old('created_at[]') }}">
+                                </div>
+                                <div class="form-group col-lg-1 col-xs-12 pull-left">
                                     <input type="submit" class="btn btn-success" value="بحث"/>
                                 </div>
                             </form>

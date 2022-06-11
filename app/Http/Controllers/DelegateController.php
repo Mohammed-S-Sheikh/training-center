@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Pipeline\Pipeline;
 
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
@@ -17,7 +18,12 @@ class DelegateController extends Controller
      */
     public function index()
     {
-        $delegates = User::orderBy('id', 'DESC')->paginate();
+        $delegates = app(Pipeline::class)
+            ->send(User::query())
+            ->through(User::FILTERS)
+            ->thenReturn()
+            ->orderByDesc('id')
+            ->paginate();
 
         return view('pages.delegate.index', compact('delegates'));
     }

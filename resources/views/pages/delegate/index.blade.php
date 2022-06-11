@@ -32,33 +32,15 @@
                     <div class="panel-body">
 
                         <div class="row">
-                            <div class="col-lg-2 col-xs-6 col-lg-offset-9 pull-right">
+                            <div class="col-lg-2 col-xs-6 col-lg-offset-4 pull-right">
                                 <a href="{{ route('delegates.create') }}" class="btn btn-success m-b-sm">إضافة مندوب</a>
                             </div>
-                            <div class="col-lg-1 col-xs-4 pull-left">
-                                <button type="button" class="btn bg-gray m-b-sm" onclick="toggleField()">
-                                    <i class="fa fa-filter"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="row filters" style="width:100%;">
                             <form method="GET" action="{{ route('delegates.index') }}">
-                                @csrf
-                                {{-- <div class="form-group col-lg-2 col-xs-12 pull-right">
-                                    <input type="text" class="form-control" name="amount" placeholder="القيمة" value="{{ old('amount') }}">
-                                </div>
-                                <div class="form-group col-lg-2 col-xs-12 pull-right">
-                                    <input type="text" class="form-control" name="discount" placeholder="التخفيض" value="{{ old('discount') }}">
-                                </div> --}}
-                                <div class="form-group col-lg-2 col-xs-12 pull-right m-t-xxs">
-                                    <input type="checkbox" class="form-control" name="is_admin" value="{{ old('is_admin') }}"/>مسؤول
-                                </div>
-                                <div class="form-group col-lg-3 col-xs-12 pull-right">
-                                    <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
-                                </div>
-                                <div class="form-group col-lg-2 col-xs-12">
+                                <div class="col-lg-1 col-xs-9 pull-left">
                                     <input type="submit" class="btn btn-success" value="بحث"/>
+                                </div>
+                                <div class="col-lg-4 col-xs-3 pull-left">
+                                    <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
                                 </div>
                             </form>
                         </div>
