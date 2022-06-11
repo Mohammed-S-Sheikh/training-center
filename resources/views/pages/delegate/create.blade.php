@@ -68,7 +68,7 @@
                                 @endif
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" id="date-input" class="form-control date-picker" value="1" name="is_admin" {{ old('is_admin')? 'checked' : null }}>مسؤول
+                                <input type="checkbox" id="date-input" class="form-control date-picker" value="1" name="is_admin" {{ old('is_admin')? 'checked' : null }}>مسؤول (يستطيع إضافة مندوبين)
                                 @if ($errors->has('is_admin'))
                                 <span class="text-danger">{{ $errors->first('is_admin') }}</span>
                                 @endif

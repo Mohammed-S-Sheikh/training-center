@@ -54,7 +54,7 @@
                                         <td>{{ $trainee->email }}</td>
                                         <td>{{ $trainee->phone }}</td>
                                         <td>{{ $trainee->amount }}</td>
-                                        <td>{{ $trainee->discount }}</td>
+                                        <td>{{ $trainee->discount }} %</td>
                                         <td>{{ $trainee->user->name }}</td>
                                         <td>
                                             <a href="{{ route('trainees.edit', ['trainee' => $trainee->id]) }}" class="btn btn-primary">

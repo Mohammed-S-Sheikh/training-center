@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->integer('amount')->nullable();
-            $table->integer('discount')->nullable();
+            $table->integer('amount')->default(800);
+            $table->integer('discount')->default(0);
             $table->foreignIdFor(User::class);
             $table->timestamps();
             $table->softDeletes();

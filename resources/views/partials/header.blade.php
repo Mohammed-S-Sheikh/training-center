@@ -17,7 +17,7 @@
             <div class="navbar-header">
                 <div class="logo-sm">
                     <a href="javascript:void(0)" id="sidebar-toggle-button"><i class="fa fa-bars"></i></a>
-                    <a class="logo-box" href="index.html"><span>ecaps</span></a>
+                    <a class="logo-box" href="/"><span>{{ env('APP_NAME') }}</span></a>
                 </div>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <i class="fa fa-angle-down"></i>

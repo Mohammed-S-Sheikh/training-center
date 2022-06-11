@@ -54,7 +54,7 @@
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif
                             </div>
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                                 <label for="amount">القيمة</label>
                                 <input type="text" id="date-input" class="form-control date-picker" name="amount" placeholder="القيمة" value="{{ $trainee->amount }}">
                                 @if ($errors->has('amount'))
@@ -67,7 +67,7 @@
                                 @if ($errors->has('discount'))
                                 <span class="text-danger">{{ $errors->first('discount') }}</span>
                                 @endif
-                            </div>
+                            </div> --}}
 
                             <button type="submit" id="add-row" class="btn btn-success pull-left m-l-xs">تعديل</button>
                                     </div>
