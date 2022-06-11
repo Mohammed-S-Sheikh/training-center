@@ -16,8 +16,10 @@ class Trainee extends Model
 
     public const FILTERS = [
         \App\Services\Pipeline\Trainee\Amount::class,
+        \App\Services\Pipeline\Trainee\CreatedAt::class,
         \App\Services\Pipeline\Trainee\Discount::class,
         \App\Services\Pipeline\Trainee\Search::class,
+        \App\Services\Pipeline\Trainee\UserId::class,
     ];
 
     public function user()

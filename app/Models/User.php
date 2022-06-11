@@ -48,6 +48,7 @@ class User extends Authenticatable
     ];
 
     public const FILTERS = [
+        \App\Services\Pipeline\User\CreatedAt::class,
         \App\Services\Pipeline\User\IsAdmin::class,
         \App\Services\Pipeline\User\Search::class,
     ];
