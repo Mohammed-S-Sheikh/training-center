@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use App\Models\Trainee;
 use App\Http\Requests\StoreTraineeRequest;
 use App\Http\Requests\UpdateTraineeRequest;
@@ -43,6 +44,9 @@ class TraineeController extends Controller
      */
     public function store(StoreTraineeRequest $request)
     {
+        $request->amount = $request->amount ?: Setting::where('key', 'course_amount')->value('value');
+        $request->discount = $request->discount ?: Setting::where('key', 'course_discount')->value('value');
+
         $trainee = Trainee::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
 
         return redirect()->route('trainees.index')->with('success', 'تم إضافة المتدرب بنجاح');
@@ -79,6 +83,9 @@ class TraineeController extends Controller
      */
     public function update(UpdateTraineeRequest $request, Trainee $trainee)
     {
+        $request->amount = $request->amount ?: Setting::where('key', 'course_amount')->value('value');
+        $request->discount = $request->discount ?: Setting::where('key', 'course_discount')->value('value');
+
         $trainee->update($request->validated());
 
         return redirect()->route('trainees.index')->with('success', 'تم تحديث المتدرب بنجاح');

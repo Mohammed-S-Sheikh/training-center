@@ -12,6 +12,8 @@ class Trainee extends Model
 
     protected $guarded = [];
 
+    protected $perPage = 10;
+
     public const FILTERS = [
         \App\Services\Pipeline\Trainee\Amount::class,
         \App\Services\Pipeline\Trainee\Discount::class,

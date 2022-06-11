@@ -26,11 +26,11 @@ class UpdateTraineeRequest extends FormRequest
         $id = $this->route('trainee')->id;
 
         return [
-            'name' => ['nullable', 'string', 'min:3', 'max:255'],
+            'name' => ['nullable', 'string', 'between:3,255'],
             'email'=> ['nullable', 'string', 'email', 'max:255', "unique:trainees,email,{$id},id,deleted_at,NULL"],
-            'phone'=> ['nullable', 'string', 'min:9', 'max:255'],
+            'phone'=> ['nullable', 'string', 'between:9,255'],
             'amount'=> ['nullable', 'numeric'],
-            'discount'=> ['nullable', 'numeric', 'min:0', 'max:100'],
+            'discount'=> ['nullable', 'numeric'],
         ];
     }
 }

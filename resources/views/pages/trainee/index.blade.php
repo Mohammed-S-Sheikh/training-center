@@ -40,9 +40,11 @@
                                         <th>الإسم</th>
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
-                                        <th>القيمة</th>
-                                        <th>التخفيض</th>
-                                        <th>بواسطة</th>
+                                        @if(Auth::user()->is_admin)
+                                            <th>القيمة</th>
+                                            <th>التخفيض</th>
+                                            <th>بواسطة</th>
+                                        @endif
                                         <th>إعدادات</th>
                                     </tr>
                                 </thead>
@@ -53,9 +55,11 @@
                                         <td>{{ $trainee->name }}</td>
                                         <td>{{ $trainee->email }}</td>
                                         <td>{{ $trainee->phone }}</td>
-                                        <td>{{ $trainee->amount }}</td>
-                                        <td>{{ $trainee->discount }} %</td>
-                                        <td>{{ $trainee->user->name }}</td>
+                                        @if(Auth::user()->is_admin)
+                                            <td>{{ $trainee->amount }}</td>
+                                            <td>{{ $trainee->discount }} %</td>
+                                            <td>{{ $trainee->user->name }}</td>
+                                        @endif
                                         <td>
                                             <a href="{{ route('trainees.edit', ['trainee' => $trainee->id]) }}" class="btn btn-primary">
                                                 <i class="menu-icon icon-pencil"></i>

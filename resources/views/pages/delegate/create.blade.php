@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="phone">رقم الهاتف</label>
-                                <input type="number" id="phone-input" class="form-control" name="phone" placeholder="رقم الهاتف" value="{{ old('phone') }}" required>
+                                <input type="text" id="phone-input" class="form-control" name="phone" placeholder="رقم الهاتف" value="{{ old('phone') }}" required>
                                 @if ($errors->has('phone'))
                                 <span class="text-danger">{{ $errors->first('phone') }}</span>
                                 @endif

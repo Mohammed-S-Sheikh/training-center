@@ -28,7 +28,7 @@ class StoreTraineeRequest extends FormRequest
             'email'=> ['nullable', 'string', 'email', 'max:255', 'unique:trainees,email,NULL,id,deleted_at,NULL'],
             'phone'=> ['nullable', 'string', 'between:9,12'],
             'amount'=> ['nullable', 'numeric'],
-            'discount'=> ['nullable', 'numeric', 'between:0,100'],
+            'discount'=> ['nullable', 'numeric'],
         ];
     }
 }
