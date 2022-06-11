@@ -15,7 +15,12 @@ class TraineeController extends Controller
      */
     public function index()
     {
-        $trainees = Trainee::with('user')->paginate();
+        $trainees = Trainee::with('user')->when(
+            !auth()->user()->is_admin,
+            function ($query) {
+                return $query->where('user_id', auth()->id());
+            }
+        )->paginate();
 
         return view('pages.trainee.index', compact('trainees'));
     }

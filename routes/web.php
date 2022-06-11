@@ -23,16 +23,14 @@ Route::view('login', 'pages.login')->name('login');
 Route::group([
     'middleware' => ['auth'],
 ], function () {
-    Route::resource('trainees', TraineeController::class);
+    Route::resource('trainees', TraineeController::class)->middleware('has_access:show,edit,update,destroy');
     Route::resource('delegates', DelegateController::class)->middleware('admin');
 
     Route::fallback(function () {
         if (Auth::user()->is_admin) {
-            $delegates = User::orderBy('id', 'DESC')->paginate(10);
-            return view('pages.delegate.index', compact('delegates'));
+            return app(DelegateController::class)->index();
         } else {
-            $trainees = Trainee::orderBy('id', 'DESC')->paginate(10);
-            return view('pages.trainee.index', compact('trainees'));
+            return app(TraineeController::class)->index();
         }
     });
 });

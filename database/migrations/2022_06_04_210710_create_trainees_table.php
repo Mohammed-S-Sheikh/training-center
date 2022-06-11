@@ -17,12 +17,13 @@ return new class extends Migration
         Schema::create('trainees', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->nullable()->unique();
+            $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->integer('amount')->nullable();
             $table->integer('discount')->nullable();
             $table->foreignIdFor(User::class);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
