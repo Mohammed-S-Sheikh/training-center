@@ -25,17 +25,11 @@ Route::view('login', 'pages.login')->name('login');
 Route::group([
     'middleware' => ['auth'],
 ], function () {
-    Route::get('/', DashboardController::class)->name('dashboard');
+    Route::get('/', DashboardController::class)->name('dashboard')->middleware('admin');
 
     Route::resource('trainees', TraineeController::class)->middleware('has_access:show,edit,update,destroy');
     Route::resource('delegates', DelegateController::class)->middleware('admin');
-    Route::resource('settings', SettingController::class)->only('update');
+    Route::resource('settings', SettingController::class)->only('update')->middleware('admin');
 
-    Route::fallback(function () {
-        if (Auth::user()->is_admin) {
-            return app(DelegateController::class)->index();
-        } else {
-            return app(TraineeController::class)->index();
-        }
-    });
+    Route::fallback(fn () => Auth::user()->is_admin ? redirect('/') : redirect('/trainees'));
 });

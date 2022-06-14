@@ -102,7 +102,7 @@
                 <div class="panel panel-white">
                     <div class="panel-body">
                         <div class="panel-heading">
-                            <h4 class="panel-title">ملاحظة: يتم حساب الأرباح عن طريق حساب قيمة الكورس حين تم إدخال المتدرب.</h4>
+                            <h4 class="panel-title">ملاحظة: يتم حساب الأرباح عن طريق حساب قيمة الكورس حين تم إدخال المتدرب مطروحا من قيمة التخفيض.</h4>
                         </div>
                         <div class="table-responsive dataTables_wrapper">
                             <table id="example3" class="display table" style="width: 100%; cellspacing: 0;">

@@ -103,9 +103,14 @@
                                                 <i class="menu-icon icon-pencil"></i>
                                             </a>
 
-                                            <button type="button" class="btn btn-danger" onclick="deleteTrainee({{ $trainee->id }})">
-                                                <i class="menu-icon fa fa-trash"></i>
-                                            </button>
+                                            @if(
+                                                Auth::user()->is_admin ||
+                                                $trainee->created_at > now()->subWeek()
+                                            )
+                                                <button type="button" class="btn btn-danger" onclick="deleteTrainee({{ $trainee->id }})">
+                                                    <i class="menu-icon fa fa-trash"></i>
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
                                     @empty

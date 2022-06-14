@@ -112,6 +112,13 @@ class TraineeController extends Controller
      */
     public function destroy(Trainee $trainee)
     {
+        if (
+            !auth()->user()->is_admin &&
+            $trainee->created_at < now()->subWeek()
+        ) {
+            abort(403);
+        }
+
         $trainee->delete();
 
         return redirect()->route('trainees.index')->with('success', 'تم حذف المتدرب بنجاح');

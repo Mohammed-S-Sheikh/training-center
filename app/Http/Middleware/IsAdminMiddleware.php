@@ -16,6 +16,6 @@ class IsAdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        return auth()->user()->is_admin ? $next($request) : abort(403);
+        return auth()->user()->is_admin ? $next($request) : redirect('/trainees');
     }
 }
