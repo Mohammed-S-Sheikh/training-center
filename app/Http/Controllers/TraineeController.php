@@ -22,7 +22,7 @@ class TraineeController extends Controller
             ->send(Trainee::query())
             ->through(Trainee::FILTERS)
             ->thenReturn()
-            ->with('user')
+            ->with('user.city')
             ->when(!auth()->user()->is_admin, function ($query) {
                 return $query->where('user_id', auth()->id());
             })

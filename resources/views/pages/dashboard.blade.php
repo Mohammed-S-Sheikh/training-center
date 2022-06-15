@@ -123,8 +123,9 @@
                                     <tr>
                                         <th>#</th>
                                         <th>الإسم</th>
-                                        <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
+                                        <th>المدينة</th>
+                                        <th>البريد الإلكتروني</th>
                                         <th>تم التنسيق مع</th>
                                         <th>عدد المتدربين</th>
                                         <th>مجموع القيم</th>
@@ -138,8 +139,9 @@
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
                                         <td>{{ $delegate->name }}</td>
-                                        <td>{{ $delegate->email }}</td>
                                         <td>{{ $delegate->phone ?? '-' }}</td>
+                                        <td>{{ $delegate->city->name }}</td>
+                                        <td>{{ $delegate->email }}</td>
                                         <td>{{ $delegate->leads_count }}</td>
                                         <td>{{ $delegate->trainees_count }}</td>
                                         <td>{{ $delegate->trainees->sum('amount') }}</td>

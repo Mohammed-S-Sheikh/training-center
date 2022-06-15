@@ -84,6 +84,7 @@
                                             <th>القيمة</th>
                                             <th>التخفيض</th>
                                             <th>بواسطة</th>
+                                            <th>المدينة</th>
                                         @endif
                                         <th>إعدادات</th>
                                     </tr>
@@ -99,6 +100,7 @@
                                             <td>{{ $lead->amount }}</td>
                                             <td>{{ $lead->discount }} %</td>
                                             <td>{{ $lead->user?->name ?? '-' }}</td>
+                                            <td>{{ $lead->user?->city->name ?? '-' }}</td>
                                         @endif
                                         <td>
                                             @if(

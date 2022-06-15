@@ -22,7 +22,7 @@ class LeadController extends Controller
             ->send(Trainee::query())
             ->through(Trainee::FILTERS)
             ->thenReturn()
-            ->with('user')
+            ->with('user.city')
             ->where('is_paid', false)
             ->paginate();
 

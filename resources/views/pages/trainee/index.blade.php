@@ -84,6 +84,7 @@
                                             <th>القيمة</th>
                                             <th>التخفيض</th>
                                             <th>بواسطة</th>
+                                            <th>المدينة</th>
                                         @endif
                                         <th>إعدادات</th>
                                     </tr>
@@ -99,6 +100,7 @@
                                             <td>{{ $trainee->amount }}</td>
                                             <td>{{ $trainee->discount }} %</td>
                                             <td>{{ $trainee->user->name }}</td>
+                                            <td>{{ $trainee->user->city->name }}</td>
                                         @endif
                                         <td>
                                             <a href="{{ route('trainees.edit', ['trainee' => $trainee->id]) }}" class="btn btn-primary">
