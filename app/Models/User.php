@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,12 +18,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'phone'
-    ];
+    protected $guarded = [];
 
     protected $perPage = 10;
 
@@ -48,6 +42,7 @@ class User extends Authenticatable
     ];
 
     public const FILTERS = [
+        \App\Services\Pipeline\User\CityId::class,
         \App\Services\Pipeline\User\CreatedAt::class,
         \App\Services\Pipeline\User\IsAdmin::class,
         \App\Services\Pipeline\User\Search::class,
@@ -55,6 +50,16 @@ class User extends Authenticatable
 
     public function trainees()
     {
-        return $this->hasMany(Trainee::class);
+        return $this->hasMany(Trainee::class)->where('is_paid', true);
+    }
+
+    public function leads()
+    {
+        return $this->hasMany(Trainee::class)->where('is_paid', false);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }

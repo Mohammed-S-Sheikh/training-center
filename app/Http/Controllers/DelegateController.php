@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\User;
-use Illuminate\Pipeline\Pipeline;
 
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -14,7 +15,7 @@ class DelegateController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index()
     {
@@ -22,37 +23,43 @@ class DelegateController extends Controller
             ->send(User::query())
             ->through(User::FILTERS)
             ->thenReturn()
+            ->with('city')
             ->orderByDesc('id')
             ->paginate();
 
-        return view('pages.delegate.index', compact('delegates'));
+        $cities = City::all();
+
+        return view('pages.delegate.index', compact('delegates', 'cities'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function create()
     {
-        return view('pages.delegate.create');
+        $cities = City::all();
+
+        return view('pages.delegate.create', compact('cities'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUserRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  \App\Http\Requests\StoreUserRequest
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function store(StoreUserRequest $request)
     {
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->is_admin = $request->is_admin?? 0;
-        $user->password = Hash::make($request->password);
-        $user->save();
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'is_admin' => $request->is_admin?? 0,
+            'city_id' => $request->city_id,
+            'password' => Hash::make($request->password),
+        ]);
 
         return redirect()->route('delegates.index')->with('success', 'تم إضافة المندوب بنجاح');
     }
@@ -61,7 +68,7 @@ class DelegateController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function show(User $user)
     {
@@ -72,11 +79,13 @@ class DelegateController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function edit(User $user)
     {
-        return view('pages.delegate.edit', compact('user'));
+        $cities = City::all();
+
+        return view('pages.delegate.edit', compact('user', 'cities'));
     }
 
     /**
@@ -84,17 +93,21 @@ class DelegateController extends Controller
      *
      * @param  \App\Http\Requests\UpdateUserRequest  $request
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->is_admin = $request->is_admin;
+        $user->city_id = $request->city_id;
 
         if ($request->password) {
             $user->password = Hash::make($request->password);
+        }
+
+        if ($request->is_admin) {
+            $user->is_admin = $request->is_admin;
         }
 
         $user->save();
@@ -106,7 +119,7 @@ class DelegateController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function destroy(User $user)
     {

@@ -6,10 +6,10 @@ use App\Models\User;
 use App\Models\Setting;
 use App\Models\Trainee;
 use Illuminate\Pipeline\Pipeline;
+use App\Http\Requests\UpdateLeadRequest;
 use App\Http\Requests\StoreTraineeRequest;
-use App\Http\Requests\UpdateTraineeRequest;
 
-class TraineeController extends Controller
+class LeadController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,20 +18,17 @@ class TraineeController extends Controller
      */
     public function index()
     {
-        $trainees = app(Pipeline::class)
+        $leads = app(Pipeline::class)
             ->send(Trainee::query())
             ->through(Trainee::FILTERS)
             ->thenReturn()
             ->with('user')
-            ->when(!auth()->user()->is_admin, function ($query) {
-                return $query->where('user_id', auth()->id());
-            })
-            ->where('is_paid', true)
+            ->where('is_paid', false)
             ->paginate();
 
         $delegates = User::all();
 
-        return view('pages.trainee.index', compact('trainees', 'delegates'));
+        return view('pages.lead.index', compact('leads', 'delegates'));
     }
 
     /**
@@ -41,60 +38,61 @@ class TraineeController extends Controller
      */
     public function create()
     {
-        return view('pages.trainee.create');
+        return view('pages.lead.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTraineeRequest
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     * @param  \App\Http\Requests\StoreTraineeRequest  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(StoreTraineeRequest $request)
     {
-        $trainee = Trainee::create(array_merge(
+        $lead = Trainee::create(array_merge(
             $request->validated(), [
                 'user_id' => auth()->id(),
                 'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
                 'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),
+                'is_paid' => false,
             ]
         ));
 
-        return redirect()->route('trainees.index')->with('success', 'تم إضافة المتدرب بنجاح');
+        return redirect()->route('leads.index')->with('success', 'تم إضافة المتدرب بنجاح');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Trainee  $tra
+     * @param  \App\Models\Trainee  $lead
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function show(Trainee $trainee)
+    public function show(Trainee $lead)
     {
-        return view('pages.trainee.show', compact('trainee'));
+        return view('pages.lead.show', compact('lead'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Trainee  $tra
+     * @param  \App\Models\Trainee  $lead
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function edit(Trainee $trainee)
+    public function edit(Trainee $lead)
     {
-        return view('pages.trainee.edit', compact('trainee'));
+        return view('pages.lead.edit', compact('lead'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateTraineeRequest  $request
-     * @param  \App\Models\Trainee  $tra
+     * @param  \App\Models\Trainee  $lead
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function update(UpdateTraineeRequest $request, Trainee $trainee)
+    public function update(UpdateLeadRequest $request, Trainee $lead)
     {
-        $trainee->update(array_merge(
+        $lead->update(array_merge(
             $request->validated(), [
                 'user_id' => auth()->id(),
                 'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
@@ -102,26 +100,26 @@ class TraineeController extends Controller
             ]
         ));
 
-        return redirect()->route('trainees.index')->with('success', 'تم تحديث المتدرب بنجاح');
+        return redirect()->route('leads.index')->with('success', 'تم تحديث المتدرب بنجاح');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Trainee  $tra
+     * @param  \App\Models\Trainee  $lead
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function destroy(Trainee $trainee)
+    public function destroy(Trainee $lead)
     {
-        if (
-            !auth()->user()->is_admin &&
-            $trainee->created_at < now()->subWeek()
-        ) {
-            abort(403);
-        }
+        $lead->delete();
 
-        $trainee->delete();
+        return redirect()->route('leads.index')->with('success', 'تم حذف المتدرب بنجاح');
+    }
 
-        return redirect()->route('trainees.index')->with('success', 'تم حذف المتدرب بنجاح');
+    public function promote(Trainee $lead)
+    {
+        $lead->update(['is_paid' => true]);
+
+        return redirect()->route('leads.index')->with('success', 'تم نقل المتدرب بنجاح');
     }
 }

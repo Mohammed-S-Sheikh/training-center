@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -22,6 +23,7 @@ class UserSeeder extends Seeder
             'email' => '5875952@gmail.com',
             'password' => Hash::make('W92TKypp'),
             'is_admin' => 1,
+            'city_id' => City::where('name', 'طرابلس')->value('id'),
         ]);
     }
 }

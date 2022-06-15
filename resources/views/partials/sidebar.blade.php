@@ -23,6 +23,11 @@
                         <i class="menu-icon icon-people"></i><span>المتدربين</span>
                     </a>
                 </li>
+                <li class="{{ request()->is('leads') ? 'active-page' : '' }}">
+                    <a href="{{ route('leads.index') }}">
+                        <i class="menu-icon fa fa-square-o"></i><span>التنسيق</span>
+                    </a>
+                </li>
                 <li class="menu-divider"></li>
                 <li>
                     <form action="{{ route('logout') }}" method="post">

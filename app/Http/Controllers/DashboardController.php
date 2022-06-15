@@ -16,16 +16,24 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $settings = Setting::all();
         $delegatesCount = User::count();
         $trainees = Trainee::all();
-        $delegates = User::with('trainees:id,amount,discount,user_id')->withCount('trainees')->paginate();
-        $settings = Setting::all();
+        $delegates = User::query()
+            ->with([
+                'city',
+                'leads:id,amount,discount,user_id',
+                'trainees:id,amount,discount,user_id',
+            ])
+            ->withCount(['trainees', 'leads'])
+            ->paginate();
 
         return view('pages.dashboard', array(
+            'settings' => $settings,
             'delegates' => $delegates,
             'delegatesCount' => $delegatesCount,
-            'trainees' => $trainees,
-            'settings' => $settings,
+            'trainees' => $trainees->where('is_paid', true),
+            'leads' => $trainees->where('is_paid', false),
         ));
     }
 }

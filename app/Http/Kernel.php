@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
 
         'admin' => \App\Http\Middleware\IsAdminMiddleware::class,
         'has_access' => \App\Http\Middleware\HasAccess::class,
+        'payment_status' => \App\Http\Middleware\PaymentStatus::class,
     ];
 }

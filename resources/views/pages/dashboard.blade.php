@@ -43,7 +43,7 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-2 col-md-6">
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-2 col-md-6">
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
@@ -69,7 +69,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-2 col-md-6">
+                <div class="panel panel-white stats-widget">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <span class="stats-number">{{ $leads->count() }}</span>
+                            <p class="stats-info">تم التنسيق مع</p>
+                        </div>
+                        <div class="pull-right">
+                            <i class="fa fa-square-o stats-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
@@ -82,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-2 col-md-6">
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
@@ -112,6 +125,7 @@
                                         <th>الإسم</th>
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
+                                        <th>تم التنسيق مع</th>
                                         <th>عدد المتدربين</th>
                                         <th>مجموع القيم</th>
                                         <th>التخفيضات</th>
@@ -126,6 +140,7 @@
                                         <td>{{ $delegate->name }}</td>
                                         <td>{{ $delegate->email }}</td>
                                         <td>{{ $delegate->phone ?? '-' }}</td>
+                                        <td>{{ $delegate->leads_count }}</td>
                                         <td>{{ $delegate->trainees_count }}</td>
                                         <td>{{ $delegate->trainees->sum('amount') }}</td>
                                         <td>{{ $delegate->trainees->sum('discount')}}</td>

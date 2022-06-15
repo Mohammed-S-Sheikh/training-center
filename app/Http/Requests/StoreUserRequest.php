@@ -28,7 +28,8 @@ class StoreUserRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users,email,NULL,id,deleted_at,NULL', 'between:3,255'],
             'password' => ['required', 'string', 'between:3,255', 'confirmed'],
             'phone' => ['nullable', 'string', 'digits:9'],
-            'is_admin' => ['nullable', 'in:1']
+            'is_admin' => ['nullable', 'in:1'],
+            'city_id' => ['required', 'exists:cities,id'],
         ];
     }
 }

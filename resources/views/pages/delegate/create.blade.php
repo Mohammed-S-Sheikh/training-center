@@ -47,6 +47,18 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label for="city_id">المدينة</label>
+                                <select class="form-control" name="city_id">
+                                    <option vlaue="" disabled selected>إختر مدينة</option>
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city->id }}" @selected(old('city_id') == $city->id)>{{ $city->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('city_id'))
+                                <span class="text-danger">{{ $errors->first('city_id') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label for="email">البريد الإلكتروني</label>
                                 <input type="email" id="position-input" class="form-control" name="email" placeholder="البريد الإلكتروني" value="{{ old('email') }}" required>
                                 @if ($errors->has('email'))

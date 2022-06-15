@@ -36,10 +36,18 @@
                                 <a href="{{ route('delegates.create') }}" class="btn btn-success m-b-sm">إضافة مندوب</a>
                             </div>
                             <form method="GET" action="{{ route('delegates.index') }}">
+                                <div class="col-lg-2 col-xs-12 pull-right">
+                                    <select class="form-control" name="city_id">
+                                        <option vlaue="" disabled selected>إختر مدينة</option>
+                                        @foreach ($cities as $city)
+                                            <option value="{{ $city->id }}" @selected(old('city_id') == $city->id)>{{ $city->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="col-lg-1 col-xs-9 pull-left">
                                     <input type="submit" class="btn btn-success" value="بحث"/>
                                 </div>
-                                <div class="col-lg-4 col-xs-3 pull-left">
+                                <div class="col-lg-3 col-xs-3 pull-left">
                                     <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
                                 </div>
                             </form>
@@ -53,6 +61,7 @@
                                         <th>الإسم</th>
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
+                                        <th>المدينة</th>
                                         <th>مسؤول</th>
                                         <th>إعدادات</th>
                                     </tr>
@@ -64,6 +73,7 @@
                                         <td>{{ $delegate->name }}</td>
                                         <td>{{ $delegate->email }}</td>
                                         <td>{{ $delegate->phone ?? '-' }}</td>
+                                        <td>{{ $delegate->city->name }}</td>
                                         <td>
                                             @if ($delegate->is_admin)
                                                 <span class="badge bg-success">مسؤول</span>

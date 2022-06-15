@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->integer('amount')->default(800);
             $table->integer('discount')->default(0);
+            $table->boolean('is_paid')->default(true);
             $table->foreignIdFor(User::class);
             $table->timestamps();
             $table->softDeletes();

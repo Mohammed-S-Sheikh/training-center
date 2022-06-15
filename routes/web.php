@@ -4,6 +4,7 @@ use App\Models\User;
 use App\Models\Trainee;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LeadController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\DelegateController;
@@ -27,9 +28,11 @@ Route::group([
 ], function () {
     Route::get('/', DashboardController::class)->name('dashboard')->middleware('admin');
 
-    Route::resource('trainees', TraineeController::class)->middleware('has_access:show,edit,update,destroy');
+    Route::put('leads/{lead}/promote', [LeadController::class, 'promote'])->name('leads.promote');
+    Route::resource('leads', LeadController::class);
     Route::resource('delegates', DelegateController::class)->middleware('admin');
     Route::resource('settings', SettingController::class)->only('update')->middleware('admin');
+    Route::resource('trainees', TraineeController::class)->middleware('has_access:show,edit,update,destroy');
 
     Route::fallback(fn () => Auth::user()->is_admin ? redirect('/') : redirect('/trainees'));
 });

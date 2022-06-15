@@ -32,7 +32,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-2 col-xs-6 col-lg-offset-9 pull-right">
-                                <a href="{{ route('trainees.create') }}" class="btn btn-success m-b-sm">إضافة متدرب</a>
+                                <a href="{{ route('leads.create') }}" class="btn btn-success m-b-sm">إضافة متدرب</a>
                             </div>
                             <div class="col-lg-1 col-xs-4 pull-left">
                                 <button type="button" class="btn bg-gray m-b-sm" onclick="toggleField()">
@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="row filters" style="width:100%;">
-                            <form method="GET" action="{{ route('trainees.index') }}">
+                            <form method="GET" action="{{ route('leads.index') }}">
                                 {{-- @csrf --}}
                                 <div class="form-group col-lg-3 col-xs-12 pull-right">
                                     <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
@@ -61,10 +61,10 @@
                                     <label for="created_at">تاريخ الإشتراك:</label>
                                 </div>
                                 <div class="form-group col-lg-2 col-xs-6 pull-right">
-                                    <input type="date" class="form-control" name="created_at[]" placeholder="من" value="{{ old('created_at[]') }}">
+                                    <input type="date" class="form-control" name="created_at[]" value="{{ old('created_at[]') }}">
                                 </div>
                                 <div class="form-group col-lg-2 col-xs-6 pull-right">
-                                    <input type="date" class="form-control" name="created_at[]" placeholder="إلى" value="{{ old('created_at[]') }}">
+                                    <input type="date" class="form-control" name="created_at[]" value="{{ old('created_at[]') }}">
                                 </div>
                                 <div class="form-group col-lg-1 col-xs-12 pull-left">
                                     <input type="submit" class="btn btn-success" value="بحث"/>
@@ -89,30 +89,34 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($trainees as $trainee)
+                                    @forelse($leads as $lead)
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
-                                        <td>{{ $trainee->name }}</td>
-                                        <td>{{ $trainee->email }}</td>
-                                        <td>{{ $trainee->phone }}</td>
+                                        <td>{{ $lead->name }}</td>
+                                        <td>{{ $lead->email }}</td>
+                                        <td>{{ $lead->phone }}</td>
                                         @if(Auth::user()->is_admin)
-                                            <td>{{ $trainee->amount }}</td>
-                                            <td>{{ $trainee->discount }} %</td>
-                                            <td>{{ $trainee->user->name }}</td>
+                                            <td>{{ $lead->amount }}</td>
+                                            <td>{{ $lead->discount }} %</td>
+                                            <td>{{ $lead->user?->name ?? '-' }}</td>
                                         @endif
                                         <td>
-                                            <a href="{{ route('trainees.edit', ['trainee' => $trainee->id]) }}" class="btn btn-primary">
+                                            @if(
+                                                Auth::user()->is_admin ||
+                                                Auth::id() == $lead->user_id
+                                            )
+                                                <button type="button" class="btn btn-success" onclick="promoteLead({{ $lead->id }})">
+                                                    <i class="menu-icon fa fa-arrow-up"></i>
+                                                </button>
+                                            @endif
+
+                                            <a href="{{ route('leads.edit', ['lead' => $lead->id]) }}" class="btn btn-primary">
                                                 <i class="menu-icon icon-pencil"></i>
                                             </a>
 
-                                            @if(
-                                                Auth::user()->is_admin ||
-                                                $trainee->created_at > now()->subWeek()
-                                            )
-                                                <button type="button" class="btn btn-danger" onclick="deleteTrainee({{ $trainee->id }})">
-                                                    <i class="menu-icon fa fa-trash"></i>
-                                                </button>
-                                            @endif
+                                            <button type="button" class="btn btn-danger" onclick="deleteTrainee({{ $lead->id }})">
+                                                <i class="menu-icon fa fa-trash"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     @empty
@@ -122,7 +126,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $trainees->links() }}
+                            {{ $leads->links() }}
                         </div>
                     </div>
                 </div>
@@ -142,10 +146,32 @@
                 <p>هل متأكد من حذف هذا المتدرب؟</p>
             </div>
             <div class="modal-footer">
-                <form id="delete-tainee" method="POST">
+                <form id="delete-trainee" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" id="add-row" class="btn btn-danger" style="float: left;">حذف</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="float: left;">إلغاء</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="promoteTrainee" tabindex="-1" role="dialog" aria-labelledby="promoteTraineeLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="float:left;"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="promoteTraineeLabel">التنسيق مع المتدرب</h4>
+            </div>
+            <div class="modal-body">
+                <p>نقل هذا المتدرب الى صفحة المتدربين؟</p>
+            </div>
+            <div class="modal-footer">
+                <form id="promote-lead" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" id="add-row" class="btn btn-success" style="float: left;">ترقية</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" style="float: left;">إلغاء</button>
                 </form>
             </div>
@@ -160,10 +186,17 @@
         $(".filters").toggle();
         function deleteTrainee(traineeId) {
             console.log(traineeId);
-            let url = "{{ route('trainees.destroy', ':trainee') }}";
-            url = url.replace(':trainee', traineeId);
-            $("#delete-tainee").attr("action", url);
+            let url = "{{ route('leads.destroy', ':lead') }}";
+            url = url.replace(':lead', traineeId);
+            $("#delete-trainee").attr("action", url);
             $('#myModal').modal('show');
+        }
+        function promoteLead(traineeId) {
+            console.log(traineeId);
+            let url = "{{ route('leads.promote', ':lead') }}";
+            url = url.replace(':lead', traineeId);
+            $("#promote-lead").attr("action", url);
+            $('#promoteTrainee').modal('show');
         }
         function toggleField(){
             $(".filters").toggle();

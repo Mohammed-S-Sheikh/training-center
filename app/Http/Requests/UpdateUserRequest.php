@@ -27,10 +27,11 @@ class UpdateUserRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
-            'email' => ['required', 'email', "unique:users,email,{$id},id,deleted_at,NULL", 'min:3', 'max:255'],
+            'email' => ['nullable', 'email', "unique:users,email,{$id},id,deleted_at,NULL", 'min:3', 'max:255'],
             'password' => ['nullable', 'string', 'min:3', 'max:255'],
             'phone' => ['nullable', 'string', 'min:9', 'max:255'],
-            'is_admin' => ['nullable', 'in:1']
+            'is_admin' => ['nullable', 'in:1'],
+            'city_id' => ['required', 'exists:cities,id'],
         ];
     }
 }
