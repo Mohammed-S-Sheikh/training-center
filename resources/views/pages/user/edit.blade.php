@@ -7,7 +7,7 @@
 <!-- Page Inner -->
 <div class="page-inner">
     <div class="page-title">
-        <h3 class="breadcrumb-header">تعديل مندوب</h3>
+        <h3 class="breadcrumb-header">تعديل مستخدم</h3>
     </div>
 
     @if(session('success'))
@@ -27,10 +27,10 @@
             <div class="col-md-12">
                 <div class="panel panel-white">
                     {{-- <div class="panel-heading">
-                        <h4 class="panel-title">تعديل مندوب</h4>
+                        <h4 class="panel-title">تعديل مستخدم</h4>
                     </div> --}}
                     <div class="panel-body">
-                        <form id="add-row-form" method="POST" action="{{ route('delegates.update', ['delegate' => $user->id]) }}">
+                        <form id="add-row-form" method="POST" action="{{ route('users.update', ['user' => $user->id]) }}">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
@@ -50,13 +50,25 @@
                             <div class="form-group">
                                 <label for="city_id">المدينة</label>
                                 <select class="form-control" name="city_id">
-                                    <option vlaue="" disabled selected>إختر مدينة</option>
+                                    <option value="" disabled selected>إختر مدينة</option>
                                     @foreach ($cities as $city)
                                         <option value="{{ $city->id }}" @selected($user->city_id == $city->id)>{{ $city->name }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('city_id'))
                                 <span class="text-danger">{{ $errors->first('city_id') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="role">الدور الوظيفي</label>
+                                <select class="form-control" name="role">
+                                    <option value="" disabled selected>إختر دور وظيفي</option>
+                                    <option value="delegate">مندوب</option>
+                                    <option value="driver">سائق</option>
+                                    <option value="admin">مسؤول</option>
+                                </select>
+                                @if ($errors->has('role'))
+                                <span class="text-danger">{{ $errors->first('role') }}</span>
                                 @endif
                             </div>
                             <div class="form-group">
@@ -78,12 +90,6 @@
                                 <input type="password" id="date-input" class="form-control date-picker" name="password_confirmation" placeholder="تأكيد كلمة المرور">
                                 @if ($errors->has('password_confirmation'))
                                 <span class="text-danger">{{ $errors->first('password_confirmation') }}</span>
-                                @endif
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" id="date-input" class="form-control date-picker" name="is_admin" value="1" {{ $user->is_admin? 'checked' : null }}>مسؤول (يستطيع إضافة مندوبين)
-                                @if ($errors->has('is_admin'))
-                                <span class="text-danger">{{ $errors->first('is_admin') }}</span>
                                 @endif
                             </div>
 

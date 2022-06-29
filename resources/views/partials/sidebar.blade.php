@@ -6,15 +6,15 @@
     <div class="page-sidebar-inner">
         <div class="page-sidebar-menu">
             <ul class="accordion-menu">
-                @if(Auth::user()->is_admin)
+                @if(Auth::user()->role == 'admin')
                     <li class="{{ request()->is('/') ? 'active-page' : '' }}">
                         <a href="{{ route('dashboard') }}">
                             <i class="menu-icon fa fa-bar-chart"></i><span>لوحة التحكم</span>
                         </a>
                     </li>
-                    <li class="{{ request()->is('delegates') ? 'active-page' : '' }}">
-                        <a href="{{ route('delegates.index') }}">
-                            <i class="menu-icon fa fa-car"></i><span>المندوبين</span>
+                    <li class="{{ request()->is('users') ? 'active-page' : '' }}">
+                        <a href="{{ route('users.index') }}">
+                            <i class="menu-icon fa fa-car"></i><span>المستخدمين</span>
                         </a>
                     </li>
                 @endif

@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'phone' => '0926744543',
             'email' => '5875952@gmail.com',
             'password' => Hash::make('W92TKypp'),
-            'is_admin' => 1,
+            'role' => 'admin',
             'city_id' => City::where('name', 'طرابلس')->value('id'),
         ]);
     }

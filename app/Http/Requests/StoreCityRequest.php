@@ -13,7 +13,7 @@ class StoreCityRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->is_admin;
+        return auth()->user()->role == 'admin';
     }
 
     /**

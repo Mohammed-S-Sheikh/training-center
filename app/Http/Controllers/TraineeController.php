@@ -22,16 +22,21 @@ class TraineeController extends Controller
             ->send(Trainee::query())
             ->through(Trainee::FILTERS)
             ->thenReturn()
-            ->with('user.city')
-            ->when(!auth()->user()->is_admin, function ($query) {
+            ->with([
+                'user' => function ($query) {
+                    $query->withTrashed();
+                },
+                'user.city',
+            ])
+            ->when(auth()->user()->role != 'admin', function ($query) {
                 return $query->where('user_id', auth()->id());
             })
             ->where('is_paid', true)
             ->paginate();
 
-        $delegates = User::all();
+        $users = User::all();
 
-        return view('pages.trainee.index', compact('trainees', 'delegates'));
+        return view('pages.trainee.index', compact('trainees', 'users'));
     }
 
     /**
@@ -114,7 +119,7 @@ class TraineeController extends Controller
     public function destroy(Trainee $trainee)
     {
         if (
-            !auth()->user()->is_admin &&
+            auth()->user()->role != 'admin' &&
             $trainee->created_at < now()->subWeek()
         ) {
             abort(403);

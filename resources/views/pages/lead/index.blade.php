@@ -47,12 +47,12 @@
                                 <div class="form-group col-lg-3 col-xs-12 pull-right">
                                     <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
                                 </div>
-                                @if (Auth::user()->is_admin)
+                                @if (Auth::user()->role == 'admin')
                                     <div class="form-group col-lg-2 col-xs-12 pull-right">
                                         <select class="form-control" name="user_id">
-                                            <option vlaue="" disabled selected>إختر مندوب</option>
-                                            @foreach ($delegates as $delegate)
-                                                <option value="{{ $delegate->id }}" @selected(old('user_id') == $delegate->id)>{{ $delegate->name }}</option>
+                                            <option vlaue="" disabled selected>إختر مستخدم</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}" @selected(old('user_id') == $user->id)>{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -80,7 +80,7 @@
                                         <th>الإسم</th>
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
-                                        @if(Auth::user()->is_admin)
+                                        @if(Auth::user()->role == 'admin')
                                             <th>القيمة</th>
                                             <th>التخفيض</th>
                                             <th>بواسطة</th>
@@ -96,7 +96,7 @@
                                         <td>{{ $lead->name }}</td>
                                         <td>{{ $lead->email }}</td>
                                         <td>{{ $lead->phone }}</td>
-                                        @if(Auth::user()->is_admin)
+                                        @if(Auth::user()->role == 'admin')
                                             <td>{{ $lead->amount }}</td>
                                             <td>{{ $lead->discount }} %</td>
                                             <td>{{ $lead->user?->name ?? '-' }}</td>
@@ -104,7 +104,7 @@
                                         @endif
                                         <td>
                                             @if(
-                                                Auth::user()->is_admin ||
+                                                Auth::user()->role == 'admin' ||
                                                 Auth::id() == $lead->user_id
                                             )
                                                 <button type="button" class="btn btn-success" onclick="promoteLead({{ $lead->id }})">

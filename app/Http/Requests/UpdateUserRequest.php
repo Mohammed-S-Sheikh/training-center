@@ -13,7 +13,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->is_admin;
+        return auth()->user()->role == 'admin';
     }
 
     /**
@@ -23,14 +23,14 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('delegate')->id;
+        $id = $this->route('user')->id;
 
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'email' => ['nullable', 'email', "unique:users,email,{$id},id,deleted_at,NULL", 'min:3', 'max:255'],
             'password' => ['nullable', 'string', 'min:3', 'max:255'],
             'phone' => ['nullable', 'string', 'min:9', 'max:255'],
-            'is_admin' => ['nullable', 'in:1'],
+            'role' => ['nullable'],
             'city_id' => ['required', 'exists:cities,id'],
         ];
     }

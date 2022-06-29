@@ -17,9 +17,9 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         $settings = Setting::all();
-        $delegatesCount = User::count();
+        $usersCount = User::count();
         $trainees = Trainee::all();
-        $delegates = User::query()
+        $users = User::query()
             ->with([
                 'city',
                 'leads:id,amount,discount,user_id',
@@ -30,8 +30,8 @@ class DashboardController extends Controller
 
         return view('pages.dashboard', array(
             'settings' => $settings,
-            'delegates' => $delegates,
-            'delegatesCount' => $delegatesCount,
+            'users' => $users,
+            'usersCount' => $usersCount,
             'trainees' => $trainees->where('is_paid', true),
             'leads' => $trainees->where('is_paid', false),
         ));

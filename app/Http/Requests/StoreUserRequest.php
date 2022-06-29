@@ -13,7 +13,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->is_admin;
+        return auth()->user()->role;
     }
 
     /**
@@ -28,7 +28,7 @@ class StoreUserRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users,email,NULL,id,deleted_at,NULL', 'between:3,255'],
             'password' => ['required', 'string', 'between:3,255', 'confirmed'],
             'phone' => ['nullable', 'string', 'digits:9'],
-            'is_admin' => ['nullable', 'in:1'],
+            'role' => ['required', 'string'],
             'city_id' => ['required', 'exists:cities,id'],
         ];
     }

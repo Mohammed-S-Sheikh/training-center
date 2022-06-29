@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
-class DelegateController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class DelegateController extends Controller
      */
     public function index()
     {
-        $delegates = app(Pipeline::class)
+        $users = app(Pipeline::class)
             ->send(User::query())
             ->through(User::FILTERS)
             ->thenReturn()
@@ -29,7 +29,7 @@ class DelegateController extends Controller
 
         $cities = City::all();
 
-        return view('pages.delegate.index', compact('delegates', 'cities'));
+        return view('pages.user.index', compact('users', 'cities'));
     }
 
     /**
@@ -41,7 +41,7 @@ class DelegateController extends Controller
     {
         $cities = City::all();
 
-        return view('pages.delegate.create', compact('cities'));
+        return view('pages.user.create', compact('cities'));
     }
 
     /**
@@ -56,12 +56,12 @@ class DelegateController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'is_admin' => $request->is_admin?? 0,
+            'role' => $request->role,
             'city_id' => $request->city_id,
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('delegates.index')->with('success', 'تم إضافة المندوب بنجاح');
+        return redirect()->route('users.index')->with('success', 'تم إضافة المستخدم بنجاح');
     }
 
     /**
@@ -72,7 +72,7 @@ class DelegateController extends Controller
      */
     public function show(User $user)
     {
-        return view('pages.delegate.show', compact('user'));
+        return view('pages.user.show', compact('user'));
     }
 
     /**
@@ -85,7 +85,7 @@ class DelegateController extends Controller
     {
         $cities = City::all();
 
-        return view('pages.delegate.edit', compact('user', 'cities'));
+        return view('pages.user.edit', compact('user', 'cities'));
     }
 
     /**
@@ -106,13 +106,13 @@ class DelegateController extends Controller
             $user->password = Hash::make($request->password);
         }
 
-        if ($request->is_admin) {
-            $user->is_admin = $request->is_admin;
+        if ($request->role) {
+            $user->role = $request->role;
         }
 
         $user->save();
 
-        return redirect()->route('delegates.index')->with('success', 'تم تحديث المندوب بنجاح');
+        return redirect()->route('users.index')->with('success', 'تم تحديث المستخدم بنجاح');
     }
 
     /**
@@ -125,6 +125,6 @@ class DelegateController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('delegates.index')->with('success', 'تم حذف المندوب بنجاح');
+        return redirect()->route('users.index')->with('success', 'تم حذف المستخدم بنجاح');
     }
 }

@@ -26,9 +26,9 @@ class LeadController extends Controller
             ->where('is_paid', false)
             ->paginate();
 
-        $delegates = User::all();
+        $users = User::all();
 
-        return view('pages.lead.index', compact('leads', 'delegates'));
+        return view('pages.lead.index', compact('leads', 'users'));
     }
 
     /**

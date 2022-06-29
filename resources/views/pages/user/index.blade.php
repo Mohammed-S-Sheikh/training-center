@@ -7,7 +7,7 @@
 <!-- Page Inner -->
 <div class="page-inner">
     <div class="page-title">
-        <h3 class="breadcrumb-header">عرض كل المندوبين</h3>
+        <h3 class="breadcrumb-header">عرض كل المستخدمين</h3>
     </div>
 
     @if(session('success'))
@@ -27,18 +27,18 @@
             <div class="col-md-12">
                 <div class="panel panel-white">
                     <div class="panel-heading">
-                        <h4 class="panel-title">عرض كل المندوبين</h4>
+                        <h4 class="panel-title">عرض كل المستخدمين</h4>
                     </div>
                     <div class="panel-body">
 
                         <div class="row">
                             <div class="col-lg-2 col-xs-6 col-lg-offset-4 pull-right">
-                                <a href="{{ route('delegates.create') }}" class="btn btn-success m-b-sm">إضافة مندوب</a>
+                                <a href="{{ route('users.create') }}" class="btn btn-success m-b-sm">إضافة مستخدم</a>
                             </div>
-                            <form method="GET" action="{{ route('delegates.index') }}">
+                            <form method="GET" action="{{ route('users.index') }}">
                                 <div class="col-lg-2 col-xs-12 pull-right">
                                     <select class="form-control" name="city_id">
-                                        <option vlaue="" disabled selected>إختر مدينة</option>
+                                        <option value="" disabled selected>إختر مدينة</option>
                                         @foreach ($cities as $city)
                                             <option value="{{ $city->id }}" @selected(old('city_id') == $city->id)>{{ $city->name }}</option>
                                         @endforeach
@@ -62,43 +62,45 @@
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
                                         <th>المدينة</th>
-                                        <th>مسؤول</th>
+                                        <th>الدور الوظيفي</th>
                                         <th>إعدادات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($delegates as $delegate)
+                                    @forelse($users as $user)
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
-                                        <td>{{ $delegate->name }}</td>
-                                        <td>{{ $delegate->email }}</td>
-                                        <td>{{ $delegate->phone ?? '-' }}</td>
-                                        <td>{{ $delegate->city->name }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->phone ?? '-' }}</td>
+                                        <td>{{ $user->city->name }}</td>
                                         <td>
-                                            @if ($delegate->is_admin)
+                                            @if ($user->role == 'admin')
                                                 <span class="badge bg-success">مسؤول</span>
+                                            @elseif ($user->role == 'driver')
+                                                <span class="badge bg-warning">سائق</span>
                                             @else
-                                                <span class="badge bg-warning">غير مسؤول</span>
+                                                <span class="badge bg-info">مندوب</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('delegates.edit', ['delegate' => $delegate->id]) }}" class="btn btn-primary">
+                                            <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-primary">
                                                 <i class="menu-icon icon-pencil"></i>
                                             </a>
 
-                                            <button type="button" class="btn btn-danger" onclick="deleteDelegate({{ $delegate->id }})">
+                                            <button type="button" class="btn btn-danger" onclick="deleteDelegate({{ $user->id }})">
                                                 <i class="menu-icon fa fa-trash"></i>
                                             </button>
                                         </td>
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="4" class="text-center"> لا يوجد مندوبين</td>
+                                        <td colspan="4" class="text-center"> لا يوجد مستخدمين</td>
                                     </tr>
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $delegates->links() }}
+                            {{ $users->links() }}
                         </div>
                     </div>
                 </div>
@@ -115,10 +117,10 @@
                 <h4 class="modal-title" id="myModalLabel">حذف متدرب</h4>
             </div>
             <div class="modal-body">
-                <p>هل متأكد من حذف هذا المندوب؟</p>
+                <p>هل متأكد من حذف هذا المستخدم؟</p>
             </div>
             <div class="modal-footer">
-                <form id="delete-delegate" method="POST">
+                <form id="delete-user" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" id="add-row" class="btn btn-danger" style="float: left;">حذف</button>
@@ -135,9 +137,9 @@
     <script>
         $(".filters").toggle();
         function deleteDelegate(id) {
-            let url = "{{ route('delegates.destroy', ':user') }}";
+            let url = "{{ route('users.destroy', ':user') }}";
             url = url.replace(':user', id);
-            $("#delete-delegate").attr("action", url);
+            $("#delete-user").attr("action", url);
             $('#myModal').modal('show');
         }
         function toggleField(){

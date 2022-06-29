@@ -24,7 +24,7 @@ class HasAccess
         }
 
         if (
-            auth()->user()->is_admin ||
+            auth()->user()->role == 'admin' ||
             $request->route('trainee')->user_id == auth()->id()
         ) {
             return $next($request);

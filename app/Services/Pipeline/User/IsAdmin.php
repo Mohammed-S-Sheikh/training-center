@@ -8,6 +8,6 @@ class IsAdmin extends Filter
 {
     public function applyFilter($builder)
     {
-        return $builder->where('is_admin', request($this->filterName()));
+        return $builder->where('role', request($this->filterName()));
     }
 }

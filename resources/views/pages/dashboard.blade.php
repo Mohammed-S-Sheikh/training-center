@@ -47,8 +47,8 @@
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
-                            <span class="stats-number">{{ $delegatesCount }}</span>
-                            <p class="stats-info">عدد المندوبين</p>
+                            <span class="stats-number">{{ $usersCount }}</span>
+                            <p class="stats-info">عدد المستخدمين</p>
                         </div>
                         <div class="pull-right">
                             <i class="fa fa-car stats-icon text-warning"></i>
@@ -131,27 +131,29 @@
                                         <th>مجموع القيم</th>
                                         <th>التخفيضات</th>
                                         <th>الأرباح</th>
-                                        <th>مسؤول</th>
+                                        <th>الدور الوظيفي</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($delegates as $delegate)
+                                    @forelse($users as $user)
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
-                                        <td>{{ $delegate->name }}</td>
-                                        <td>{{ $delegate->phone ?? '-' }}</td>
-                                        <td>{{ $delegate->city->name }}</td>
-                                        <td>{{ $delegate->email }}</td>
-                                        <td>{{ $delegate->leads_count }}</td>
-                                        <td>{{ $delegate->trainees_count }}</td>
-                                        <td>{{ $delegate->trainees->sum('amount') }}</td>
-                                        <td>{{ $delegate->trainees->sum('discount')}}</td>
-                                        <td>{{ $delegate->trainees->sum('amount') - $delegate->trainees->sum('discount') }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->phone ?? '-' }}</td>
+                                        <td>{{ $user->city->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->leads_count }}</td>
+                                        <td>{{ $user->trainees_count }}</td>
+                                        <td>{{ $user->trainees->sum('amount') }}</td>
+                                        <td>{{ $user->trainees->sum('discount')}}</td>
+                                        <td>{{ $user->trainees->sum('amount') - $user->trainees->sum('discount') }}</td>
                                         <td>
-                                            @if ($delegate->is_admin)
+                                            @if ($user->role == 'admin')
                                                 <span class="badge bg-success">مسؤول</span>
+                                            @elseif ($user->role == 'driver')
+                                                <span class="badge bg-warning">سائق</span>
                                             @else
-                                                <span class="badge bg-warning">غير مسؤول</span>
+                                                <span class="badge bg-info">مندوب</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -162,7 +164,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $delegates->links() }}
+                            {{ $users->links() }}
                         </div>
                     </div>
                 </div>
