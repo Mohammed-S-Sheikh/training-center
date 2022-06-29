@@ -31,24 +31,22 @@
                     </div>
                     <div class="panel-body">
 
-                        <div class="row">
-                            <div class="col-lg-2 col-xs-6 col-lg-offset-4 pull-right">
-                                <a href="{{ route('users.create') }}" class="btn btn-success m-b-sm">إضافة مستخدم</a>
-                            </div>
-                            <form method="GET" action="{{ route('users.index') }}">
-                                <div class="col-lg-2 col-xs-12 pull-right">
+                        <div class="row" style="width:100%;">
+                            <form method="GET" action="{{ route('trainees.index') }}">
+                                {{-- @csrf --}}
+                                <div class="form-group col-lg-3 col-xs-12 pull-right">
+                                    <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
+                                </div>
+                                <div class="form-group col-lg-2 col-xs-12 pull-right">
                                     <select class="form-control" name="city_id">
-                                        <option value="" disabled selected>إختر مدينة</option>
+                                        <option vlaue="" disabled selected>إختر مدينة</option>
                                         @foreach ($cities as $city)
                                             <option value="{{ $city->id }}" @selected(old('city_id') == $city->id)>{{ $city->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-lg-1 col-xs-9 pull-left">
+                                <div class="form-group col-lg-1 col-xs-12 pull-left">
                                     <input type="submit" class="btn btn-success" value="بحث"/>
-                                </div>
-                                <div class="col-lg-3 col-xs-3 pull-left">
-                                    <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
                                 </div>
                             </form>
                         </div>

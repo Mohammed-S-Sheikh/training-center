@@ -48,7 +48,7 @@
                     <div class="panel-body">
                         <div class="pull-left">
                             <span class="stats-number">{{ $usersCount }}</span>
-                            <p class="stats-info">عدد المستخدمين</p>
+                            <p class="stats-info">مستخدمين</p>
                         </div>
                         <div class="pull-right">
                             <i class="fa fa-car stats-icon text-warning"></i>
@@ -61,7 +61,7 @@
                     <div class="panel-body">
                         <div class="pull-left">
                             <span class="stats-number">{{ $trainees->count() }}</span>
-                            <p class="stats-info">عدد المتدربين</p>
+                            <p class="stats-info">متدربين</p>
                         </div>
                         <div class="pull-right">
                             <i class="icon-people stats-icon text-primary"></i>
