@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Country;
 use App\Models\Setting;
 use App\Models\Trainee;
+use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
-use App\Http\Requests\StoreTraineeRequest;
-use App\Http\Requests\UpdateTraineeRequest;
-use App\Models\Country;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreForeignTraineeRequest;
+use App\Http\Requests\UpdateForeignTraineeRequest;
 
-class TraineeController extends Controller
+class ForeignTraineeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,14 +36,15 @@ class TraineeController extends Controller
                 return $query->where('user_id', auth()->id());
             })
             ->whereHas('country', function ($query) {
-                $query->where('name', 'ليبيا');
+                $query->whereNot('name', 'ليبيا');
             })
             ->where('is_paid', true)
             ->paginate();
 
         $users = User::all();
+        $countries = Country::all();
 
-        return view('pages.trainee.index', compact('trainees', 'users'));
+        return view('pages.foreign-trainee.index', compact('trainees', 'users', 'countries'));
     }
 
     /**
@@ -51,27 +54,28 @@ class TraineeController extends Controller
      */
     public function create()
     {
-        return view('pages.trainee.create');
+        $countries = Country::all();
+
+        return view('pages.foreign-trainee.create', compact('countries'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTraineeRequest
+     * @param  \App\Http\Requests\StoreForeignTraineeRequest
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function store(StoreTraineeRequest $request)
+    public function store(StoreForeignTraineeRequest $request)
     {
-        $trainee = Trainee::create(array_merge(
+        $foreign_trainee = Trainee::create(array_merge(
             $request->validated(), [
-                'country_id' => Country::where('name', 'ليبيا')->value('id'),
                 'user_id' => auth()->id(),
                 'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
                 'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),
             ]
         ));
 
-        return redirect()->route('trainees.index')->with('success', 'تم إضافة المتدرب بنجاح');
+        return redirect()->route('foreign-trainees.index')->with('success', 'تم إضافة المتدرب بنجاح');
     }
 
     /**
@@ -80,9 +84,9 @@ class TraineeController extends Controller
      * @param  \App\Models\Trainee  $tra
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function show(Trainee $trainee)
+    public function show(Trainee $foreign_trainee)
     {
-        return view('pages.trainee.show', compact('trainee'));
+        return view('pages.foreign-trainee.show', compact('trainee'));
     }
 
     /**
@@ -91,23 +95,23 @@ class TraineeController extends Controller
      * @param  \App\Models\Trainee  $tra
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function edit(Trainee $trainee)
+    public function edit(Trainee $foreign_trainee)
     {
         $countries = Country::all();
 
-        return view('pages.trainee.edit', compact('trainee', 'countries'));
+        return view('pages.foreign-trainee.edit', compact('trainee', 'countries'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTraineeRequest  $request
+     * @param  \App\Http\Requests\UpdateForeignTraineeRequest  $request
      * @param  \App\Models\Trainee  $tra
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function update(UpdateTraineeRequest $request, Trainee $trainee)
+    public function update(UpdateForeignTraineeRequest $request, Trainee $foreign_trainee)
     {
-        $trainee->update(array_merge(
+        $foreign_trainee->update(array_merge(
             $request->validated(), [
                 'user_id' => auth()->id(),
                 'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
@@ -115,7 +119,7 @@ class TraineeController extends Controller
             ]
         ));
 
-        return redirect()->route('trainees.index')->with('success', 'تم تحديث المتدرب بنجاح');
+        return redirect()->route('foreign-trainees.index')->with('success', 'تم تحديث المتدرب بنجاح');
     }
 
     /**
@@ -124,17 +128,17 @@ class TraineeController extends Controller
      * @param  \App\Models\Trainee  $tra
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function destroy(Trainee $trainee)
+    public function destroy(Trainee $foreign_trainee)
     {
         if (
             auth()->user()->role != 'admin' &&
-            $trainee->created_at < now()->subWeek()
+            $foreign_trainee->created_at < now()->subWeek()
         ) {
             abort(403);
         }
 
-        $trainee->delete();
+        $foreign_trainee->delete();
 
-        return redirect()->route('trainees.index')->with('success', 'تم حذف المتدرب بنجاح');
+        return redirect()->route('foreign-trainees.index')->with('success', 'تم حذف المتدرب بنجاح');
     }
 }

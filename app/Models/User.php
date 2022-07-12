@@ -43,6 +43,7 @@ class User extends Authenticatable
 
     public const FILTERS = [
         \App\Services\Pipeline\User\CityId::class,
+        \App\Services\Pipeline\User\CountryId::class,
         \App\Services\Pipeline\User\CreatedAt::class,
         \App\Services\Pipeline\User\IsAdmin::class,
         \App\Services\Pipeline\User\Search::class,
@@ -61,5 +62,10 @@ class User extends Authenticatable
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
     }
 }

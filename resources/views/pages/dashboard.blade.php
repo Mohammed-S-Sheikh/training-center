@@ -10,7 +10,7 @@
         <h3 class="breadcrumb-header">لوحة التحكم</h3>
     </div>
     <div id="main-wrapper">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-white">
                     <div class="panel-body">
@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <hr>
         <div class="row">
             <div class="col-lg-2 col-md-6">
@@ -86,7 +86,7 @@
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
-                            <span class="stats-number">{{ $trainees->sum('amount')  }}</span>
+                            <span class="stats-number">{{ $trainees->sum('amount')  }}د </span>
                             <p class="stats-info">إجمالي القيم</p>
                         </div>
                         <div class="pull-right">
@@ -99,8 +99,21 @@
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
-                            <span class="stats-number">{{ $trainees->sum('amount') - $trainees->sum('discount')  }}</span>
+                            <span class="stats-number">{{ $trainees->sum('amount') - $trainees->sum('discount')  }}د</span>
                             <p class="stats-info">صافي الأرباح</p>
+                        </div>
+                        <div class="pull-right">
+                            <i class="icon-arrow_upward stats-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                <div class="panel panel-white stats-widget">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <span class="stats-number">${{  round(( $trainees->sum('amount') - $trainees->sum('discount') ) / 5.595)  }}</span>
+                            <p class="stats-info">صافي الأرباح بالدولار</p>
                         </div>
                         <div class="pull-right">
                             <i class="icon-arrow_upward stats-icon"></i>

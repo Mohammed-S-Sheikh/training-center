@@ -14,6 +14,8 @@ class CreatedAt extends Filter
             [$min, $max] = request($this->filterName());
         }
 
+        if (!$min || !$max) return $builder;
+
         return $builder->whereBetween('created_at', [$min, $max]);
     }
 }

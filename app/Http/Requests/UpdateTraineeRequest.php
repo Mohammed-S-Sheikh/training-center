@@ -29,8 +29,7 @@ class UpdateTraineeRequest extends FormRequest
             'name' => ['nullable', 'string', 'between:3,255'],
             'email'=> ['nullable', 'string', 'email', 'max:255', "unique:trainees,email,{$id},id,deleted_at,NULL"],
             'phone'=> ['nullable', 'string', 'between:9,255'],
-            'amount'=> ['nullable', 'numeric'],
-            'discount'=> ['nullable', 'numeric'],
+            'country_id'=> ['required', 'exists:countries,id'],
         ];
     }
 }

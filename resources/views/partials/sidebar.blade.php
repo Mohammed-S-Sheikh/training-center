@@ -18,17 +18,32 @@
                         </a>
                     </li>
                 @endif
-                <li class="{{ request()->is('trainees') ? 'active-page' : '' }}">
-                    <a href="{{ route('trainees.index') }}">
-                        <i class="menu-icon icon-people"></i><span>المتدربين</span>
-                    </a>
-                </li>
-                <li class="{{ request()->is('leads') ? 'active-page' : '' }}">
-                    <a href="{{ route('leads.index') }}">
-                        <i class="menu-icon fa fa-square-o"></i><span>التنسيق</span>
-                    </a>
-                </li>
-                <li class="menu-divider"></li>
+
+                @if(Auth::user()->country->name == 'ليبيا' || Auth::user()->role == 'admin')
+                    <li class="{{ request()->is('trainees') ? 'active-page' : '' }}">
+                        <a href="{{ route('trainees.index') }}">
+                            <i class="menu-icon icon-people"></i><span>المتدربين</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(Auth::user()->country->name != 'ليبيا' || Auth::user()->role == 'admin')
+                    <li class="{{ request()->is('foreign-trainees') ? 'active-page' : '' }}">
+                        <a href="{{ route('foreign-trainees.index') }}">
+                            <i class="menu-icon icon-people"></i><span>المتدربين الأجانب</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(Auth::user()->role != 'driver')
+                    <li class="{{ request()->is('leads') ? 'active-page' : '' }}">
+                        <a href="{{ route('leads.index') }}">
+                            <i class="menu-icon fa fa-square-o"></i><span>التنسيق</span>
+                        </a>
+                    </li>
+                    <li class="menu-divider"></li>
+                @endif
+
                 <li>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf

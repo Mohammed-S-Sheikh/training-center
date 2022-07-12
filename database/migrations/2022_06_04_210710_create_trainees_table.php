@@ -1,9 +1,10 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Country;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->integer('discount')->default(0);
             $table->boolean('is_paid')->default(true);
             $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Country::class);
             $table->timestamps();
             $table->softDeletes();
         });

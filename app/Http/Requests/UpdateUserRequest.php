@@ -31,7 +31,8 @@ class UpdateUserRequest extends FormRequest
             'password' => ['nullable', 'string', 'min:3', 'max:255'],
             'phone' => ['nullable', 'string', 'min:9', 'max:255'],
             'role' => ['nullable'],
-            'city_id' => ['required', 'exists:cities,id'],
+            'city_id' => ['required'],
+            'country_id'=> ['required', 'exists:countries,id'],
         ];
     }
 }

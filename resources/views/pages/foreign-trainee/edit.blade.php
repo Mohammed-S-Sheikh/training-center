@@ -30,7 +30,7 @@
                         <h4 class="panel-title">تعديل متدرب</h4>
                     </div> --}}
                     <div class="panel-body">
-                        <form id="add-row-form" method="POST" action="{{ route('trainees.update', ['trainee' => $trainee->id]) }}">
+                        <form id="add-row-form" method="POST" action="{{ route('foreign-trainees.update', ['foreign_trainee' => $trainee->id]) }}">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
@@ -59,7 +59,7 @@
                                 <select class="form-control" name="country_id">
                                     <option value="" disabled selected>إختر جنسية</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}" @selected($country->id == 125)>
+                                        <option value="{{ $country->id }}" @selected(old('country_id') == $country->id)>
                                             {{ $country->name }}</option>
                                     @endforeach
                                 </select>

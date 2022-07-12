@@ -30,12 +30,25 @@
                         <h4 class="panel-title">عرض كل المستخدمين</h4>
                     </div>
                     <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-2 col-xs-6 col-lg-offset-9 pull-right">
+                                <a href="{{ route('users.create') }}" class="btn btn-success m-b-sm">إضافة مستخدم</a>
+                            </div>
+                        </div>
 
                         <div class="row" style="width:100%;">
-                            <form method="GET" action="{{ route('trainees.index') }}">
+                            <form method="GET" action="{{ route('users.index') }}">
                                 {{-- @csrf --}}
                                 <div class="form-group col-lg-3 col-xs-12 pull-right">
                                     <input type="text" class="form-control" name="search" placeholder="الإسم، الإيميل، رقم الهاتف" value="{{ old('search') }}">
+                                </div>
+                                <div class="form-group col-lg-2 col-xs-12 pull-right">
+                                    <select class="form-control" name="country_id">
+                                        <option vlaue="" disabled selected>إختر جنسية</option>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country->id }}" @selected(old('country_id') == $country->id)>{{ $country->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group col-lg-2 col-xs-12 pull-right">
                                     <select class="form-control" name="city_id">
@@ -59,6 +72,7 @@
                                         <th>الإسم</th>
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
+                                        <th>البلد</th>
                                         <th>المدينة</th>
                                         <th>الدور الوظيفي</th>
                                         <th>إعدادات</th>
@@ -71,7 +85,11 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone ?? '-' }}</td>
-                                        <td>{{ $user->city->name }}</td>
+                                        <td>{{ $user->country->name }}</td>
+                                        <td>{{
+                                            $user->country->name == 'ليبيا'
+                                                ? $user->city->name : '-'
+                                        }}</td>
                                         <td>
                                             @if ($user->role == 'admin')
                                                 <span class="badge bg-success">مسؤول</span>

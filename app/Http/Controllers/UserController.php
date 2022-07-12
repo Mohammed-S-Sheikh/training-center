@@ -9,6 +9,7 @@ use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Country;
 
 class UserController extends Controller
 {
@@ -23,13 +24,14 @@ class UserController extends Controller
             ->send(User::query())
             ->through(User::FILTERS)
             ->thenReturn()
-            ->with('city')
+            ->with(['city', 'country'])
             ->orderByDesc('id')
             ->paginate();
 
         $cities = City::all();
+        $countries = Country::all();
 
-        return view('pages.user.index', compact('users', 'cities'));
+        return view('pages.user.index', compact('users', 'cities', 'countries'));
     }
 
     /**
@@ -40,8 +42,9 @@ class UserController extends Controller
     public function create()
     {
         $cities = City::all();
+        $countries = Country::all();
 
-        return view('pages.user.create', compact('cities'));
+        return view('pages.user.create', compact('cities', 'countries'));
     }
 
     /**
@@ -58,6 +61,7 @@ class UserController extends Controller
             'phone' => $request->phone,
             'role' => $request->role,
             'city_id' => $request->city_id,
+            'country_id' => $request->country_id,
             'password' => Hash::make($request->password),
         ]);
 
@@ -84,8 +88,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $cities = City::all();
+        $countries = Country::all();
 
-        return view('pages.user.edit', compact('user', 'cities'));
+        return view('pages.user.edit', compact('user', 'cities', 'countries'));
     }
 
     /**
@@ -101,6 +106,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->city_id = $request->city_id;
+        $user->country_id = $request->country_id;
 
         if ($request->password) {
             $user->password = Hash::make($request->password);

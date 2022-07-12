@@ -29,7 +29,8 @@ class StoreUserRequest extends FormRequest
             'password' => ['required', 'string', 'between:3,255', 'confirmed'],
             'phone' => ['nullable', 'string', 'digits:9'],
             'role' => ['required', 'string'],
-            'city_id' => ['required', 'exists:cities,id'],
+            'city_id' => ['required'],
+            'country_id'=> ['required', 'exists:countries,id'],
         ];
     }
 }

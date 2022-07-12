@@ -15,6 +15,7 @@ class CitySeeder extends Seeder
     public function run()
     {
         City::insert([
+            ['name' => 'أجنبي'],
             ['name' => 'طرابلس'],
             ['name' => 'بنغازي'],
             ['name' => 'مصراتة'],

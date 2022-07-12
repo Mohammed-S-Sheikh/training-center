@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Country;
 use App\Models\Setting;
 use App\Models\Trainee;
 use Illuminate\Pipeline\Pipeline;
-use App\Http\Requests\UpdateLeadRequest;
 use App\Http\Requests\StoreTraineeRequest;
+use App\Http\Requests\UpdateTraineeRequest;
 
 class LeadController extends Controller
 {
@@ -51,6 +52,7 @@ class LeadController extends Controller
     {
         $lead = Trainee::create(array_merge(
             $request->validated(), [
+                'country_id' => Country::where('name', 'ليبيا')->value('id'),
                 'user_id' => auth()->id(),
                 'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
                 'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),
@@ -90,10 +92,11 @@ class LeadController extends Controller
      * @param  \App\Models\Trainee  $lead
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function update(UpdateLeadRequest $request, Trainee $lead)
+    public function update(UpdateTraineeRequest $request, Trainee $lead)
     {
         $lead->update(array_merge(
             $request->validated(), [
+                'country_id' => Country::where('name', 'ليبيا')->value('id'),
                 'user_id' => auth()->id(),
                 'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
                 'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),

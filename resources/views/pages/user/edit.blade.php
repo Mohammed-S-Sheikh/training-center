@@ -48,6 +48,18 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label for="country_id">الجنسية</label>
+                                <select class="form-control" name="country_id">
+                                    <option value="" disabled selected>إختر جنسية</option>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}" @selected($user->country_id == $country->id)>{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('country_id'))
+                                <span class="text-danger">{{ $errors->first('country_id') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label for="city_id">المدينة</label>
                                 <select class="form-control" name="city_id">
                                     <option value="" disabled selected>إختر مدينة</option>

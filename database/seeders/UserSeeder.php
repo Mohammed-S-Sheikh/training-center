@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\City;
 use App\Models\User;
+use App\Models\Country;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('W92TKypp'),
             'role' => 'admin',
             'city_id' => City::where('name', 'طرابلس')->value('id'),
+            'country_id' => Country::where('name', 'ليبيا')->value('id'),
         ]);
     }
 }
