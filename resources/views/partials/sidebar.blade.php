@@ -9,7 +9,7 @@
                 @if(Auth::user()->role == 'admin')
                     <li class="{{ request()->is('/') ? 'active-page' : '' }}">
                         <a href="{{ route('dashboard') }}">
-                            <i class="menu-icon fa fa-bar-chart"></i><span>لوحة التحكم</span>
+                            <i class="menu-icon fa fa-bar-chart"></i><span>الإدارة</span>
                         </a>
                     </li>
                     <li class="{{ request()->is('users') ? 'active-page' : '' }}">
@@ -27,13 +27,13 @@
                     </li>
                 @endif
 
-                @if(Auth::user()->country->name != 'ليبيا' || Auth::user()->role == 'admin')
+                {{-- @if(Auth::user()->country->name != 'ليبيا' || Auth::user()->role == 'admin')
                     <li class="{{ request()->is('foreign-trainees') ? 'active-page' : '' }}">
                         <a href="{{ route('foreign-trainees.index') }}">
                             <i class="menu-icon icon-people"></i><span>المتدربين الأجانب</span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
 
                 @if(Auth::user()->role != 'driver')
                     <li class="{{ request()->is('leads') ? 'active-page' : '' }}">
@@ -41,9 +41,9 @@
                             <i class="menu-icon fa fa-square-o"></i><span>التنسيق</span>
                         </a>
                     </li>
-                    <li class="menu-divider"></li>
                 @endif
 
+                <li class="menu-divider"></li>
                 <li>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf

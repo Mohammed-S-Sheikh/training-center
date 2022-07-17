@@ -27,6 +27,8 @@ class StoreForeignTraineeRequest extends FormRequest
             'name' => ['required', 'string', 'between:3,255'],
             'email'=> ['nullable', 'string', 'email', 'max:255', 'unique:trainees,email,NULL,id,deleted_at,NULL'],
             'phone'=> ['nullable', 'string', 'between:9,12'],
+            'ly'=> ['required', 'numeric'],
+            'us'=> ['required', 'numeric'],
             'country_id'=> ['required', 'exists:countries,id'],
         ];
     }

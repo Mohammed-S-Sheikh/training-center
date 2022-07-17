@@ -94,8 +94,8 @@
                                         <th>رقم الهاتف</th>
                                         <th>البلد</th>
                                         @if(Auth::user()->role == 'admin')
-                                            <th>القيمة</th>
-                                            <th>التخفيض</th>
+                                            <th>القيمة بالدينار</th>
+                                            <th>القيمة بالدولار</th>
                                             <th>بواسطة</th>
                                         @endif
                                         <th>إعدادات</th>
@@ -110,8 +110,8 @@
                                         <td>{{ $trainee->phone }}</td>
                                         <td>{{ $trainee->country->name }}</td>
                                         @if(Auth::user()->role == 'admin')
-                                            <td>{{ $trainee->amount }}</td>
-                                            <td>{{ $trainee->discount }} %</td>
+                                            <td>{{ $trainee->ly }}</td>
+                                            <td>{{ $trainee->us }}</td>
                                             <td>{{ $trainee->user->name }}</td>
                                         @endif
                                         <td>

@@ -4,7 +4,7 @@ namespace App\Services\Pipeline\Trainee;
 
 use App\Services\Pipeline\Filter;
 
-class Discount extends Filter
+class Ly extends Filter
 {
     public function applyFilter($builder)
     {
@@ -14,6 +14,6 @@ class Discount extends Filter
             [$min, $max] = request($this->filterName());
         }
 
-        return $builder->whereBetween('discount', [$min, $max]);
+        return $builder->whereBetween('ly', [$min, $max]);
     }
 }

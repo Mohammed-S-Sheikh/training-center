@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->integer('amount')->default(800);
-            $table->integer('discount')->default(0);
+            $table->integer('ly')->default(800);
+            $table->integer('us')->default(143);
             $table->boolean('is_paid')->default(true);
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Country::class);

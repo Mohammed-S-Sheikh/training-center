@@ -54,8 +54,8 @@ class LeadController extends Controller
             $request->validated(), [
                 'country_id' => Country::where('name', 'ليبيا')->value('id'),
                 'user_id' => auth()->id(),
-                'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
-                'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),
+                'ly' => $request->ly ?: Setting::where('key', 'course_ly')->value('value'),
+                'us' => $request->us ?: Setting::where('key', 'course_us')->value('value'),
                 'is_paid' => false,
             ]
         ));
@@ -98,8 +98,8 @@ class LeadController extends Controller
             $request->validated(), [
                 'country_id' => Country::where('name', 'ليبيا')->value('id'),
                 'user_id' => auth()->id(),
-                'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
-                'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),
+                'ly' => $request->ly ?: Setting::where('key', 'course_ly')->value('value'),
+                'us' => $request->us ?: Setting::where('key', 'course_us')->value('value'),
             ]
         ));
 

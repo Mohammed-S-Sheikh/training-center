@@ -22,8 +22,8 @@ class DashboardController extends Controller
         $users = User::query()
             ->with([
                 'city',
-                'leads:id,amount,discount,user_id',
-                'trainees:id,amount,discount,user_id',
+                'leads:id,ly,us,user_id',
+                'trainees:id,ly,us,user_id',
             ])
             ->withCount(['trainees', 'leads'])
             ->paginate();

@@ -70,8 +70,8 @@ class ForeignTraineeController extends Controller
         $foreign_trainee = Trainee::create(array_merge(
             $request->validated(), [
                 'user_id' => auth()->id(),
-                'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
-                'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),
+                'ly' => $request->ly ?: Setting::where('key', 'course_ly')->value('value'),
+                'us' => $request->us ?: Setting::where('key', 'course_us')->value('value'),
             ]
         ));
 
@@ -114,8 +114,8 @@ class ForeignTraineeController extends Controller
         $foreign_trainee->update(array_merge(
             $request->validated(), [
                 'user_id' => auth()->id(),
-                'amount' => $request->amount ?: Setting::where('key', 'course_amount')->value('value'),
-                'discount' => $request->discount ?: Setting::where('key', 'course_discount')->value('value'),
+                'ly' => $request->ly ?: Setting::where('key', 'course_ly')->value('value'),
+                'us' => $request->us ?: Setting::where('key', 'course_us')->value('value'),
             ]
         ));
 

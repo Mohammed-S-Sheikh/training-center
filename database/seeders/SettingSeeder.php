@@ -17,14 +17,14 @@ class SettingSeeder extends Seeder
     {
         Setting::create([
             'name' => 'قيمة الكورس',
-            'key' => 'course_amount',
+            'key' => 'course_ly',
             'value' => '800',
         ]);
 
         Setting::create([
-            'name' => 'قيمة التخفيض',
-            'key' => 'course_discount',
-            'value' => '0',
+            'name' => 'قيمة الكورس',
+            'key' => 'course_us',
+            'value' => '143',
         ]);
     }
 }

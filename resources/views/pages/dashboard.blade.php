@@ -82,11 +82,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-6">
+            {{-- <div class="col-lg-2 col-md-6">
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
-                            <span class="stats-number">{{ $trainees->sum('amount')  }}د </span>
+                            <span class="stats-number">{{ $trainees->sum('ly')  }}د </span>
                             <p class="stats-info">إجمالي القيم</p>
                         </div>
                         <div class="pull-right">
@@ -94,13 +94,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-2 col-md-6">
+            </div> --}}
+            <div class="col-lg-3 col-md-6">
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
-                            <span class="stats-number">{{ $trainees->sum('amount') - $trainees->sum('discount')  }}د</span>
-                            <p class="stats-info">صافي الأرباح</p>
+                            <span class="stats-number">{{ $trainees->sum('ly') }}</span>
+                            <p class="stats-info">صافي الأرباح - دينار</p>
                         </div>
                         <div class="pull-right">
                             <i class="icon-arrow_upward stats-icon"></i>
@@ -108,12 +108,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-6">
+            <div class="col-lg-3 col-md-6">
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
                         <div class="pull-left">
-                            <span class="stats-number">${{  round(( $trainees->sum('amount') - $trainees->sum('discount') ) / 5.595)  }}</span>
-                            <p class="stats-info">صافي الأرباح بالدولار</p>
+                            <span class="stats-number">${{ $trainees->sum('us') }}</span>
+                            <p class="stats-info">صافي الأرباح - دولار</p>
                         </div>
                         <div class="pull-right">
                             <i class="icon-arrow_upward stats-icon"></i>
@@ -136,14 +136,13 @@
                                     <tr>
                                         <th>#</th>
                                         <th>الإسم</th>
+                                        <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
                                         <th>المدينة</th>
-                                        <th>البريد الإلكتروني</th>
                                         <th>تم التنسيق مع</th>
                                         <th>عدد المتدربين</th>
-                                        <th>مجموع القيم</th>
-                                        <th>التخفيضات</th>
-                                        <th>الأرباح</th>
+                                        <th>الأرباح - دينار</th>
+                                        <th>الأرباح - دولار</th>
                                         <th>الدور الوظيفي</th>
                                     </tr>
                                 </thead>
@@ -152,14 +151,13 @@
                                     <tr>
                                         <td>{{ ++$loop->index }}</td>
                                         <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
                                         <td>{{ $user->phone ?? '-' }}</td>
                                         <td>{{ $user->city->name }}</td>
-                                        <td>{{ $user->email }}</td>
                                         <td>{{ $user->leads_count }}</td>
                                         <td>{{ $user->trainees_count }}</td>
-                                        <td>{{ $user->trainees->sum('amount') }}</td>
-                                        <td>{{ $user->trainees->sum('discount')}}</td>
-                                        <td>{{ $user->trainees->sum('amount') - $user->trainees->sum('discount') }}</td>
+                                        <td>{{ $user->trainees->sum('ly') }}</td>
+                                        <td>{{ $user->trainees->sum('us')}}</td>
                                         <td>
                                             @if ($user->role == 'admin')
                                                 <span class="badge bg-success">مسؤول</span>

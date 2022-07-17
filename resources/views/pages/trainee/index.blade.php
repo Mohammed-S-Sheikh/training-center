@@ -81,8 +81,8 @@
                                         <th>البريد الإلكتروني</th>
                                         <th>رقم الهاتف</th>
                                         @if(Auth::user()->role == 'admin')
-                                            <th>القيمة</th>
-                                            <th>التخفيض</th>
+                                            <th>القيمة بالدينار</th>
+                                            <th>القيمة بالدولار</th>
                                             <th>بواسطة</th>
                                             <th>المدينة</th>
                                         @endif
@@ -97,8 +97,8 @@
                                         <td>{{ $trainee->email }}</td>
                                         <td>{{ $trainee->phone }}</td>
                                         @if(Auth::user()->role == 'admin')
-                                            <td>{{ $trainee->amount }}</td>
-                                            <td>{{ $trainee->discount }} %</td>
+                                            <td>{{ $trainee->ly }}</td>
+                                            <td>{{ $trainee->us }}</td>
                                             <td>{{ $trainee->user->name }}</td>
                                             <td>{{ $trainee->user->city->name }}</td>
                                         @endif
