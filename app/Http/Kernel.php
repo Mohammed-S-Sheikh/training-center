@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'driver' => \App\Http\Middleware\IsDriverMiddleware::class,
         'has_access' => \App\Http\Middleware\HasAccess::class,
         'payment_status' => \App\Http\Middleware\PaymentStatus::class,
+        'roles' => \App\Http\Middleware\RoleMiddleware::class,
     ];
 }

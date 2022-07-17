@@ -95,19 +95,21 @@
                     </div>
                 </div>
             </div> --}}
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-white stats-widget">
-                    <div class="panel-body">
-                        <div class="pull-left">
-                            <span class="stats-number">{{ $trainees->sum('ly') }}</span>
-                            <p class="stats-info">صافي الأرباح - دينار</p>
-                        </div>
-                        <div class="pull-right">
-                            <i class="icon-arrow_upward stats-icon"></i>
+            @if(Auth::user()->role == 'admin')
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-white stats-widget">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <span class="stats-number">{{ $trainees->sum('ly') }}</span>
+                                <p class="stats-info">صافي الأرباح - دينار</p>
+                            </div>
+                            <div class="pull-right">
+                                <i class="icon-arrow_upward stats-icon"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
             <div class="col-lg-3 col-md-6">
                 <div class="panel panel-white stats-widget">
                     <div class="panel-body">
@@ -141,7 +143,9 @@
                                         <th>المدينة</th>
                                         <th>تم التنسيق مع</th>
                                         <th>عدد المتدربين</th>
-                                        <th>الأرباح - دينار</th>
+                                        @if(Auth::user()->role == 'admin')
+                                            <th>الأرباح - دينار</th>
+                                        @endif
                                         <th>الأرباح - دولار</th>
                                         <th>الدور الوظيفي</th>
                                     </tr>
@@ -156,15 +160,19 @@
                                         <td>{{ $user->city->name }}</td>
                                         <td>{{ $user->leads_count }}</td>
                                         <td>{{ $user->trainees_count }}</td>
-                                        <td>{{ $user->trainees->sum('ly') }}</td>
+                                        @if(Auth::user()->role == 'admin')
+                                            <td>{{ $user->trainees->sum('ly') }}</td>
+                                        @endif
                                         <td>{{ $user->trainees->sum('us')}}</td>
                                         <td>
                                             @if ($user->role == 'admin')
-                                                <span class="badge bg-success">مسؤول</span>
+                                                <span class="badge bg-danger">مسؤول</span>
                                             @elseif ($user->role == 'driver')
                                                 <span class="badge bg-warning">سائق</span>
-                                            @else
+                                            @elseif ($user->role == 'delegate')
                                                 <span class="badge bg-info">مندوب</span>
+                                            @elseif ($user->role == 'accountant')
+                                                <span class="badge bg-success">محاسب</span>
                                             @endif
                                         </td>
                                     </tr>
