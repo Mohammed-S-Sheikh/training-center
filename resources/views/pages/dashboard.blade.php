@@ -169,7 +169,7 @@
                                                 <span class="badge bg-danger">مسؤول</span>
                                             @elseif ($user->role == 'driver')
                                                 <span class="badge bg-warning">سائق</span>
-                                            @elseif ($user->role == 'delegate')
+                                            @elseif ($user->role == 'user')
                                                 <span class="badge bg-info">مندوب</span>
                                             @elseif ($user->role == 'accountant')
                                                 <span class="badge bg-success">محاسب</span>
