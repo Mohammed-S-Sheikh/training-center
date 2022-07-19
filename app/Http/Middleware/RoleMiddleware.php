@@ -21,6 +21,11 @@ class RoleMiddleware
             return $next($request);
         }
 
-        abort(403);
+        return match (Auth::user()->role) {
+            'admin', 'accountant' => redirect('/'),
+            'driver', 'user' => redirect('/trainees'),
+
+            default => abort (403),
+        };
     }
 }
