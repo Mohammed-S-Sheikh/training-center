@@ -75,7 +75,7 @@
                                 <label for="role">الدور الوظيفي</label>
                                 <select class="form-control" name="role">
                                     <option value="" disabled selected>إختر دور وظيفي</option>
-                                    <option value="delegate">مندوب</option>
+                                    <option value="user">مندوب</option>
                                     <option value="driver">سائق</option>
                                     <option value="admin">مسؤول</option>
                                 </select>
