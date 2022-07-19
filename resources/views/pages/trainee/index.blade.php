@@ -124,7 +124,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $trainees->links() }}
+                            {{ $trainees->appends($data)->links() }}
                         </div>
                     </div>
                 </div>

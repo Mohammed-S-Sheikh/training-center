@@ -31,7 +31,9 @@ class UserController extends Controller
         $cities = City::all();
         $countries = Country::all();
 
-        return view('pages.user.index', compact('users', 'cities', 'countries'));
+        $data = request()->all();
+
+        return view('pages.user.index', compact('users', 'cities', 'countries', 'data'));
     }
 
     /**

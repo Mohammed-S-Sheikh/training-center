@@ -29,6 +29,7 @@ class DashboardController extends Controller
             ->paginate();
 
         return view('pages.dashboard', array(
+            'data' => $request->all(),
             'settings' => $settings,
             'users' => $users,
             'usersCount' => $usersCount,

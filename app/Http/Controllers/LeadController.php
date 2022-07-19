@@ -29,7 +29,9 @@ class LeadController extends Controller
 
         $users = User::all();
 
-        return view('pages.lead.index', compact('leads', 'users'));
+        $data = request()->all();
+
+        return view('pages.lead.index', compact('leads', 'users', 'data'));
     }
 
     /**

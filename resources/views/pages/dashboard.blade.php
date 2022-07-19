@@ -183,7 +183,7 @@
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $users->links() }}
+                            {{ $users->appends($data)->links() }}
                         </div>
                     </div>
                 </div>

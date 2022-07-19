@@ -43,7 +43,9 @@ class TraineeController extends Controller
 
         $users = User::all();
 
-        return view('pages.trainee.index', compact('trainees', 'users'));
+        $data = request()->all();
+
+        return view('pages.trainee.index', compact('trainees', 'users', 'data'));
     }
 
     /**
