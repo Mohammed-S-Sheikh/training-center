@@ -34,5 +34,10 @@ Route::group([
     Route::resource('trainees', TraineeController::class)->middleware('has_access:show,edit,update,destroy');
     Route::resource('foreign-trainees', ForeignTraineeController::class);
 
-    Route::fallback(fn () => Auth::user()->role == 'admin' ? redirect('/') : abort(403));
+    Route::fallback(function () {
+        return match (Auth::user()->role) {
+            'admin', 'accountant' => redirect('/'),
+            'driver', 'user' => redirect('/trainees'),
+        };
+    });
 });

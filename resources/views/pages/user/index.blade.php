@@ -92,11 +92,13 @@
                                         }}</td>
                                         <td>
                                             @if ($user->role == 'admin')
-                                                <span class="badge bg-success">مسؤول</span>
+                                                <span class="badge bg-danger">مسؤول</span>
                                             @elseif ($user->role == 'driver')
                                                 <span class="badge bg-warning">سائق</span>
-                                            @else
+                                            @elseif ($user->role == 'user')
                                                 <span class="badge bg-info">مندوب</span>
+                                            @elseif ($user->role == 'accountant')
+                                                <span class="badge bg-success">محاسب</span>
                                             @endif
                                         </td>
                                         <td>

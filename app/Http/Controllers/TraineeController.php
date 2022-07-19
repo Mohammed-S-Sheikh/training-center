@@ -19,6 +19,8 @@ class TraineeController extends Controller
      */
     public function index()
     {
+        $localScope = ! in_array(auth()->user()->role, ['admin', 'accountant']);
+
         $trainees = app(Pipeline::class)
             ->send(Trainee::query())
             ->through(Trainee::FILTERS)
@@ -30,7 +32,7 @@ class TraineeController extends Controller
                 'user.city',
                 'country',
             ])
-            ->when(auth()->user()->role != 'admin', function ($query) {
+            ->when($localScope, function ($query) {
                 return $query->where('user_id', auth()->id());
             })
             ->whereHas('country', function ($query) {
