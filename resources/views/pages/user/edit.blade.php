@@ -78,6 +78,7 @@
                                     <option value="user">مندوب</option>
                                     <option value="driver">سائق</option>
                                     <option value="admin">مسؤول</option>
+                                    <option value="accountant">محاسب</option>
                                 </select>
                                 @if ($errors->has('role'))
                                 <span class="text-danger">{{ $errors->first('role') }}</span>
