@@ -16,9 +16,11 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $settings = Setting::all();
-        $usersCount = User::count();
-        $trainees = Trainee::all();
+        $trainees = Trainee::query()
+            ->whereHas('country', function ($query) {
+                $query->where('name', 'ليبيا');
+            })->get();
+
         $users = User::query()
             ->with([
                 'city',
@@ -30,9 +32,9 @@ class DashboardController extends Controller
 
         return view('pages.dashboard', array(
             'data' => $request->all(),
-            'settings' => $settings,
+            'settings' => Setting::all(),
             'users' => $users,
-            'usersCount' => $usersCount,
+            'usersCount' => User::count(),
             'trainees' => $trainees->where('is_paid', true),
             'leads' => $trainees->where('is_paid', false),
         ));

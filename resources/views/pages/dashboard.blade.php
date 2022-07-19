@@ -74,7 +74,7 @@
                     <div class="panel-body">
                         <div class="pull-left">
                             <span class="stats-number">{{ $leads->count() }}</span>
-                            <p class="stats-info">تم التنسيق مع</p>
+                            <p class="stats-info">المنسق معهم</p>
                         </div>
                         <div class="pull-right">
                             <i class="fa fa-square-o stats-icon"></i>
