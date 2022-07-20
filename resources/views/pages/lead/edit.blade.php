@@ -30,25 +30,39 @@
                         <form id="add-row-form" method="POST" action="{{ route('leads.update', ['lead' => $lead->id]) }}">
                             @csrf
                             @method('PUT')
-                            <div class="form-group">
+                            <div class="form-group col-lg-12 col-xs-12">
                                 <label for="name">الإسم</label>
                                 <input type="text" id="name-input" class="form-control" name="name" placeholder="الإسم" value="{{ $lead->name }}" required>
                                 @if ($errors->has('name'))
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                                 @endif
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-lg-12 col-xs-12">
                                 <label for="phone">رقم الهاتف</label>
                                 <input type="text" id="phone-input" class="form-control" name="phone" placeholder="رقم الهاتف" value="{{ $lead->phone }}">
                                 @if ($errors->has('phone'))
                                 <span class="text-danger">{{ $errors->first('phone') }}</span>
                                 @endif
                             </div>
-                            <div class="form-group">
+                            <div class="form-group col-lg-12 col-xs-12">
                                 <label for="email">البريد الإلكتروني</label>
                                 <input type="email" id="position-input" class="form-control" name="email" placeholder="البريد الإلكتروني" value="{{ $lead->email }}">
                                 @if ($errors->has('email'))
                                 <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group col-lg-6 col-xs-6">
+                                <label for="us">القيمة بالدولار</label>
+                                <input type="text" id="date-input" class="form-control date-picker" name="us" placeholder="القيمة" value="{{ $lead->us }}">
+                                @if ($errors->has('us'))
+                                <span class="text-danger">{{ $errors->first('us') }}</span>
+                                @endif
+                            </div>
+                            <div class="form-group col-lg-6 col-xs-6">
+                                <label for="ly">القيمة بالدينار</label>
+                                <input type="text" id="date-input" class="form-control date-picker" name="ly" placeholder="القيمة" value="{{ $lead->ly }}">
+                                @if ($errors->has('ly'))
+                                <span class="text-danger">{{ $errors->first('ly') }}</span>
                                 @endif
                             </div>
 

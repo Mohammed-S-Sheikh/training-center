@@ -8,7 +8,7 @@ use App\Models\Setting;
 use App\Models\Trainee;
 use Illuminate\Pipeline\Pipeline;
 use App\Http\Requests\StoreTraineeRequest;
-use App\Http\Requests\UpdateTraineeRequest;
+use App\Http\Requests\UpdateLeadRequest;
 
 class LeadController extends Controller
 {
@@ -90,11 +90,11 @@ class LeadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTraineeRequest  $request
+     * @param  \App\Http\Requests\UpdateLeadRequest  $request
      * @param  \App\Models\Trainee  $lead
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function update(UpdateTraineeRequest $request, Trainee $lead)
+    public function update(UpdateLeadRequest $request, Trainee $lead)
     {
         $lead->update(array_merge(
             $request->validated(), [
